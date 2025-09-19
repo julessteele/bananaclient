@@ -6,12 +6,12 @@ import net.minecraft.client.texture.NativeImage
 import net.minecraft.client.texture.NativeImageBackedTexture
 import net.minecraft.util.Identifier
 
-class Fullbright: Module("Fullbright", "Makes everything fully bright", Category.RENDER) {
+class Fullbright : Module("Fullbright", "Makes everything fully bright", Category.RENDER) {
 
     companion object {
         @JvmField
         var whiteTex: NativeImageBackedTexture? = null
-        val WHITE_TEX_ID = Identifier.of("bananaclient", "fullbright_white")
+        val WHITE_TEX_ID: Identifier = Identifier.of("bananaclient", "fullbright_white")
     }
 
     override fun onEnable() {

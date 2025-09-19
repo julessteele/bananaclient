@@ -20,7 +20,7 @@ object ModuleManager {
 
         // Check for keypress to toggle each module
         modules.forEach { module ->
-            module.keybind?.let { key ->
+            module.keybind.let { key ->
                 while (key.wasPressed()) {
                     module.toggle()
                     Banana.logger.info("Toggled ${module.name} -> ${module.enabled}")
