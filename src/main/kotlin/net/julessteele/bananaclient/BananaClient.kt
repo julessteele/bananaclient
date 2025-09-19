@@ -40,5 +40,7 @@ object BananaClient : ClientModInitializer {
             else
                 Banana.logger.error("HUD RENDERING HOOK: Matrices were empty")
         })
+
+        Banana.logger.info("${Banana.name} has finished setting up and has attached hooks...")
     }
 }

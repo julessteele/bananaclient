@@ -1,4 +1,4 @@
-package net.julessteele.bananaclient.mixin;
+package net.julessteele.bananaclient.mixin.client;
 
 import com.mojang.blaze3d.textures.GpuTextureView;
 import net.julessteele.bananaclient.module.Module;

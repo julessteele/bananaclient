@@ -11,7 +11,7 @@
     "requireAnnotations": true
   },
   "client": [
-    "EntityRendererMixin",
-    "LightmapTextureManagerMixin"
+    "client.EntityRendererMixin",
+    "client.LightmapTextureManagerMixin"
   ]
 }

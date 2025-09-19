@@ -1,4 +1,4 @@
-package net.julessteele.bananaclient.mixin;
+package net.julessteele.bananaclient.mixin.client;
 
 import net.julessteele.bananaclient.module.ModuleManager;
 import net.minecraft.client.render.entity.EntityRenderer;
