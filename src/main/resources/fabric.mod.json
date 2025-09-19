@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "bananaclient",
+	"version": "${version}",
+	"name": "Banana Client",
+	"description": "The official Banana Client mod for fabric.",
+	"authors": [
+		"MysteriousLychee"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/bananaclient/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "net.julessteele.bananaclient.Banana",
+				"adapter": "kotlin"
+			}
+		],
+        "client": [
+            {
+                "value": "net.julessteele.bananaclient.BananaClient",
+                "adapter": "kotlin"
+            }
+        ]
+	},
+	"mixins": [
+		"bananaclient.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.17.2",
+		"minecraft": "~1.21.8",
+		"java": ">=21",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
