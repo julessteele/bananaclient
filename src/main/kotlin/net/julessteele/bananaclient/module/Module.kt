@@ -13,10 +13,7 @@ abstract class Module(val name: String, val description: String, val category: C
     var enabled: Boolean = false
         private set
 
-    val keybind: KeyBinding? =
-        if (keyCode != GLFW_KEY_UNKNOWN) {
-            KeyBindingHelper.registerKeyBinding(KeyBinding("key.${Banana.modid}.${name.lowercase()}", InputUtil.Type.KEYSYM, keyCode, "category.${Banana.modid}"))
-        } else null
+    val keybind: KeyBinding = KeyBindingHelper.registerKeyBinding(KeyBinding("key.${Banana.modid}.${name.lowercase()}", InputUtil.Type.KEYSYM, keyCode, "category.${Banana.modid}"))
 
     open fun onEnable() { }
     open fun onDisable() { }

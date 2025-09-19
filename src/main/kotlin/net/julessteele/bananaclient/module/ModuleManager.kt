@@ -1,5 +1,6 @@
 package net.julessteele.bananaclient.module
 
+import net.julessteele.bananaclient.Banana
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.util.math.MatrixStack
 
@@ -17,15 +18,17 @@ object ModuleManager {
 
     fun onTick() {
 
+        // Check for keypress to toggle each module
         modules.forEach { module ->
             module.keybind?.let { key ->
                 while (key.wasPressed()) {
                     module.toggle()
-                    println("Toggled ${module.name} -> ${module.enabled}")
+                    Banana.logger.info("Toggled ${module.name} -> ${module.enabled}")
                 }
             }
         }
 
+        // Run onTick function for each module
         modules.filter { it.enabled }.forEach { it.onTick() }
     }
 

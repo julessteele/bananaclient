@@ -1,53 +1,34 @@
 package net.julessteele.bananaclient.modules
 
-import com.mojang.blaze3d.vertex.VertexFormat
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
 import net.julessteele.bananaclient.module.Module
 import net.minecraft.client.MinecraftClient
-import net.minecraft.client.gl.ShaderProgram
-import net.minecraft.client.render.GameRenderer
-import net.minecraft.client.render.Tessellator
-import net.minecraft.client.render.VertexFormats
-import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.client.texture.NativeImage
+import net.minecraft.client.texture.NativeImageBackedTexture
 import net.minecraft.util.Identifier
-import org.lwjgl.glfw.GLFW.GLFW_KEY_B
 
-class Fullbright : Module(name = "Fullbright", description = "See in the dark", category = Category.RENDER, keyCode = GLFW_KEY_B) {
+class Fullbright: Module("Fullbright", "Makes everything fully bright", Category.RENDER) {
 
-    private var shader: ShaderProgram? = null
+    companion object {
+        @JvmField
+        var whiteTex: NativeImageBackedTexture? = null
+        val WHITE_TEX_ID = Identifier.of("bananaclient", "fullbright_white")
+    }
 
     override fun onEnable() {
-
-        WorldRenderEvents.END.register { context ->
-            val mc = MinecraftClient.getInstance()
-            if (mc.player == null || mc.world == null) return@register
-
-            if (shader == null) {
-                shader = GameRenderer.loadShader(
-                    Identifier.of("bananaclient", "fullbright")
-                )
+        if (whiteTex == null) {
+            // Create a 16x16 white image
+            val image = NativeImage(16, 16, false)
+            for (x in 0 until 16) {
+                for (y in 0 until 16) {
+                    image.setColor(x, y, 0xFFFFFFFF.toInt())
+                }
             }
 
-            shader?.let { renderFullScreenQuad(it, context.matrixStack()) }
+            // Wrap in a NativeImageBackedTexture
+            whiteTex = NativeImageBackedTexture({ "fullbright_white" }, image)
 
+            // Register with the TextureManager
+            MinecraftClient.getInstance().textureManager.registerTexture(WHITE_TEX_ID, whiteTex!!)
         }
-    }
-
-    override fun onDisable() {
-    }
-
-    private fun renderFullScreenQuad(shader: ShaderProgram, matrices: MatrixStack) {
-        shader.bind()
-
-        val tessellator = Tessellator.getInstance()
-        val buffer = tessellator.buffer
-        buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION)
-        buffer.vertex(-1.0, -1.0, 0.0).next()
-        buffer.vertex(1.0, -1.0, 0.0).next()
-        buffer.vertex(1.0, 1.0, 0.0).next()
-        buffer.vertex(-1.0, 1.0, 0.0).next()
-        tessellator.draw()
-
-        shader.unbind()
     }
 }
