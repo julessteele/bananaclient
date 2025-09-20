@@ -12,6 +12,7 @@
   },
   "client": [
     "client.EntityRendererMixin",
-    "client.LightmapTextureManagerMixin"
+    "client.LightmapTextureManagerMixin",
+    "client.ParticleMixin"
   ]
 }
