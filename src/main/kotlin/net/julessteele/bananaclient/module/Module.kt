@@ -1,6 +1,7 @@
 package net.julessteele.bananaclient.module
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext
 import net.julessteele.bananaclient.Banana
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.option.KeyBinding
@@ -18,7 +19,7 @@ abstract class Module(val name: String, val description: String, val category: C
     open fun onEnable() { }
     open fun onDisable() { }
     open fun onTick() { }
-    open fun onRenderEntity(matrices: MatrixStack) { }
+    open fun onRenderEntity(matrices: MatrixStack, context: WorldRenderContext) { }
     open fun onRenderHUD(mc: MinecraftClient, matrices: MatrixStack) { }
 
     fun toggle() {

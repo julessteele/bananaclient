@@ -1,0 +1,7 @@
+{
+  "vertex": "minecraft:core/entity",
+  "fragment": "minecraft:core/entity",
+  "vertex_format": "position_color",
+  "depth_test": "never",
+  "cull": "false"
+}

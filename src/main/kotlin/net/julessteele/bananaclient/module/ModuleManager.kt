@@ -1,5 +1,6 @@
 package net.julessteele.bananaclient.module
 
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext
 import net.julessteele.bananaclient.Banana
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.util.math.MatrixStack
@@ -32,8 +33,8 @@ object ModuleManager {
         modules.filter { it.enabled }.forEach { it.onTick() }
     }
 
-    fun onRenderEntity(matrices: MatrixStack) {
-        modules.filter { it.enabled }.forEach { it.onRenderEntity(matrices) }
+    fun onRenderEntity(matrices: MatrixStack, context: WorldRenderContext) {
+        modules.filter { it.enabled }.forEach { it.onRenderEntity(matrices, context) }
     }
 
     fun onRenderHUD(mc: MinecraftClient, matrices: MatrixStack) {

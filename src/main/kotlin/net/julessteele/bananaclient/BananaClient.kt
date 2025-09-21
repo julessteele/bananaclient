@@ -4,6 +4,7 @@ import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
 import net.julessteele.bananaclient.module.ModuleManager
+import net.julessteele.bananaclient.modules.ESP
 import net.julessteele.bananaclient.modules.Fullbright
 import net.minecraft.client.MinecraftClient
 
@@ -14,6 +15,7 @@ object BananaClient : ClientModInitializer {
 
         // Register modules
         ModuleManager.register(Fullbright())
+        ModuleManager.register(ESP())
 
         // Hook into ticks
         ClientTickEvents.END_CLIENT_TICK.register {
@@ -25,7 +27,7 @@ object BananaClient : ClientModInitializer {
             val matrices = context.matrixStack()
 
             if (matrices != null)
-                ModuleManager.onRenderEntity(matrices)
+                ModuleManager.onRenderEntity(matrices, context)
             else
                 Banana.logger.error("ENTITY RENDERING HOOK: Matrices were empty")
         })
