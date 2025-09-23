@@ -6,12 +6,12 @@ import org.slf4j.LoggerFactory
 
 object Banana : ModInitializer {
 
-    val name: String = "Banana Client"
-    val modid: String = "bananaclient"
+    const val NAME: String = "Banana Client"
+    const val MOD_ID: String = "bananaclient"
     val logger: Logger = LoggerFactory.getLogger("bananaclient")
 
     // Resources not initialized yet... In a mod load ready state
 	override fun onInitialize() {
-		logger.info("Hello from the {} Mod Initializer!", name)
+		logger.info("Hello from the {} Mod Initializer!", NAME)
 	}
 }

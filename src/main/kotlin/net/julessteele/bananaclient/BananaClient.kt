@@ -11,7 +11,7 @@ import net.minecraft.client.MinecraftClient
 object BananaClient : ClientModInitializer {
 
     override fun onInitializeClient() {
-        Banana.logger.info("Hello from the {} Client Mod Initializer!", Banana.name)
+        Banana.logger.info("Hello from the {} Client Mod Initializer!", Banana.NAME)
 
         // Register modules
         ModuleManager.register(Fullbright())
@@ -43,6 +43,6 @@ object BananaClient : ClientModInitializer {
                 Banana.logger.error("HUD RENDERING HOOK: Matrices were empty")
         })
 
-        Banana.logger.info("${Banana.name} has finished setting up and has attached hooks...")
+        Banana.logger.info("${Banana.NAME} has finished setting up and has attached hooks...")
     }
 }

@@ -8,14 +8,12 @@ import net.julessteele.bananaclient.Banana
 import net.julessteele.bananaclient.module.Module
 import net.julessteele.bananaclient.module.ModuleManager
 import net.minecraft.client.MinecraftClient
-import net.minecraft.client.gl.RenderPipelines
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.RenderPhase
 import net.minecraft.client.render.VertexConsumer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.VertexFormats
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
@@ -107,7 +105,7 @@ class ESP : Module("ESP", "Shows entities through walls.", Category.RENDER) {
             RenderPipeline.builder()
                 .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
                 .withCull(false)
-                .withLocation(Identifier.of(Banana.modid, "esp_lines_pipeline"))
+                .withLocation(Identifier.of(Banana.MOD_ID, "render_pipelines/esp_lines_pipeline.json"))
                 .withVertexShader(Identifier.of("minecraft", "core/entity"))
                 .withFragmentShader(Identifier.of("minecraft", "core/entity"))
                 .withVertexFormat(VertexFormats.POSITION_COLOR, VertexFormat.DrawMode.LINES)

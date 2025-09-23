@@ -14,7 +14,7 @@ abstract class Module(val name: String, val description: String, val category: C
     var enabled: Boolean = false
         private set
 
-    val keybind: KeyBinding = KeyBindingHelper.registerKeyBinding(KeyBinding("key.${Banana.modid}.${name.lowercase()}", InputUtil.Type.KEYSYM, keyCode, "category.${Banana.modid}"))
+    val keybind: KeyBinding = KeyBindingHelper.registerKeyBinding(KeyBinding("key.${Banana.MOD_ID}.${name.lowercase()}", InputUtil.Type.KEYSYM, keyCode, "category.${Banana.MOD_ID}"))
 
     open fun onEnable() { }
     open fun onDisable() { }
