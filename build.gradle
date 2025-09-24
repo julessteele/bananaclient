@@ -28,7 +28,11 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
+
+    // Indigo
+    modImplementation "net.fabricmc.fabric-api:fabric-renderer-indigo:4.0.4+1.21.8"
 }
+
 
 processResources {
 	inputs.property "version", project.version

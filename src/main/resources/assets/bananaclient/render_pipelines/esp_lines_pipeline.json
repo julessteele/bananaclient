@@ -1,26 +1,7 @@
 {
-  "name": "esp_lines_pipeline",
-  "program": {
-    "vertex_shader": "esp_lines_vertex.glsl",
-    "fragment_shader": "esp_lines_fragment.glsl"
-  },
-  "attributes": [
-    {"name": "Position", "type": "vec3"},
-    {"name": "Color", "type": "vec4"}
-  ],
-  "uniforms": [
-    {"name": "ProjectionMatrix", "type": "mat4"},
-    {"name": "ViewMatrix", "type": "mat4"}
-  ],
-  "outputs": [
-    {"name": "fragColor", "type": "vec4"}
-  ],
-  "topology": "LINES",
-  "blend": {
-    "enable": true,
-    "src": "SRC_ALPHA",
-    "dst": "ONE_MINUS_SRC_ALPHA"
-  },
-  "depth_test": true,
-  "depth_write": false
+  "vertex_shader": "bananaclient:shaders/core/esp.vert",
+  "fragment_shader": "bananaclient:shaders/core/esp.frag",
+  "blend_state": { "enable": true },
+  "depth_test": "less_equal",
+  "cull": "back"
 }

@@ -106,8 +106,8 @@ class ESP : Module("ESP", "Shows entities through walls.", Category.RENDER) {
                 .withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
                 .withCull(false)
                 .withLocation(Identifier.of(Banana.MOD_ID, "render_pipelines/esp_lines_pipeline.json"))
-                .withVertexShader(Identifier.of("minecraft", "core/entity"))
-                .withFragmentShader(Identifier.of("minecraft", "core/entity"))
+                .withVertexShader(Identifier.of("bananaclient", "shaders/core/esp.vert"))
+                .withFragmentShader(Identifier.of("bananaclient", "shaders/core/esp.frag"))
                 .withVertexFormat(VertexFormats.POSITION_COLOR, VertexFormat.DrawMode.LINES)
                 .build(),
             RenderLayer.MultiPhaseParameters.builder()
