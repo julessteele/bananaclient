@@ -15,6 +15,8 @@ object ModuleManager {
 
     fun getModules(): List<Module> = modules
 
+    fun getModulesByCategory(category: Module.Category): List<Module> = modules.filter { it.category == category }
+
     fun getModuleByName(moduleName: String): Module? = modules.find { it.name.equals(moduleName, ignoreCase = true) }
 
     fun onTick() {

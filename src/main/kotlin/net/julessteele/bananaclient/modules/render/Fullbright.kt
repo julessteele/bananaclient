@@ -1,6 +1,8 @@
-package net.julessteele.bananaclient.modules
+package net.julessteele.bananaclient.modules.render
 
+import net.julessteele.bananaclient.Banana
 import net.julessteele.bananaclient.module.Module
+import net.julessteele.bananaclient.module.ModuleManager
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.texture.NativeImage
 import net.minecraft.client.texture.NativeImageBackedTexture

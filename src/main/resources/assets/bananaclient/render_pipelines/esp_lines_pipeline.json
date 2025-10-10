@@ -1,7 +1,0 @@
-{
-  "vertex_shader": "bananaclient:shaders/core/esp.vert",
-  "fragment_shader": "bananaclient:shaders/core/esp.frag",
-  "blend_state": { "enable": true },
-  "depth_test": "less_equal",
-  "cull": "back"
-}
