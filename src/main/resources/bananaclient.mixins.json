@@ -11,6 +11,7 @@
     "requireAnnotations": true
   },
   "client": [
+    "client.ChatListenerMixin",
     "client.EntityRendererMixin",
     "client.LightmapTextureManagerMixin",
     "client.ParticleMixin"

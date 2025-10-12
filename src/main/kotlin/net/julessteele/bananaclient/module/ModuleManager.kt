@@ -17,6 +17,11 @@ object ModuleManager {
 
     fun getModulesByCategory(category: Module.Category): List<Module> = modules.filter { it.category == category }
 
+    /**
+     * Ignores module name case.
+     * @param moduleName The module to get by name regardless of case.
+     * @author MysteriousLychee
+     */
     fun getModuleByName(moduleName: String): Module? = modules.find { it.name.equals(moduleName, ignoreCase = true) }
 
     fun onTick() {

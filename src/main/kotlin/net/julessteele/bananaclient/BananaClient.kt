@@ -3,6 +3,10 @@ package net.julessteele.bananaclient
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
+import net.julessteele.bananaclient.command.CommandManager
+import net.julessteele.bananaclient.commands.HelpCommand
+import net.julessteele.bananaclient.commands.SayCommand
+import net.julessteele.bananaclient.commands.ToggleCommand
 import net.julessteele.bananaclient.module.ModuleManager
 import net.julessteele.bananaclient.modules.render.Fullbright
 import net.minecraft.client.MinecraftClient
@@ -15,6 +19,11 @@ object BananaClient : ClientModInitializer {
 
         // Register modules
         ModuleManager.register(Fullbright())
+
+        // Register commands
+        CommandManager.register(HelpCommand())
+        CommandManager.register(ToggleCommand())
+        CommandManager.register(SayCommand())
 
         // Hook into ticks
         ClientTickEvents.END_CLIENT_TICK.register {
