@@ -3,6 +3,7 @@ package net.julessteele.bananaclient.module
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext
 import net.julessteele.bananaclient.Banana
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.util.math.MatrixStack
 
 object ModuleManager {
@@ -13,16 +14,23 @@ object ModuleManager {
         modules.add(module)
     }
 
-    fun getModules(): List<Module> = modules
-
-    fun getModulesByCategory(category: Module.Category): List<Module> = modules.filter { it.category == category }
-
     /**
-     * Ignores module name case.
-     * @param moduleName The module to get by name regardless of case.
-     * @author MysteriousLychee
+     * Gets all modules, module by name, or module by category. Does NOT accept both.
      */
-    fun getModuleByName(moduleName: String): Module? = modules.find { it.name.equals(moduleName, ignoreCase = true) }
+    fun getModules(moduleName: String? = null, category: Module.Category? = null): List<Module> {
+        return if (moduleName == null && category == null) {
+            modules
+        } else if (moduleName == null && category != null) {
+            modules.filter { it.category == category }
+        } else if (category == null) {
+            modules.filter { it.name.equals(moduleName, ignoreCase = true) }
+        } else {
+            Banana.logger.error("Cannot get module from both name and category, please provide one.")
+            return emptyList()
+        }
+    }
+
+    fun getEnabledModules() = modules.filter { it.enabled }
 
     fun onTick() {
 
@@ -31,7 +39,9 @@ object ModuleManager {
             module.keybind.let { key ->
                 while (key.wasPressed()) {
                     module.toggle()
-                    Banana.logger.info("Toggled ${module.name} -> ${module.enabled}")
+
+                    // TODO FIX KEYBIND LOGGER FEEDBACK
+                    Banana.logger.info("${module.keybind} was pressed. Toggled ${module.name} -> ${module.enabled}")
                 }
             }
         }
@@ -44,7 +54,7 @@ object ModuleManager {
         modules.filter { it.enabled }.forEach { it.onRenderEntity(matrices, context) }
     }
 
-    fun onRenderHUD(mc: MinecraftClient, matrices: MatrixStack) {
-        modules.filter { it.enabled }.forEach { it.onRenderHUD(mc, matrices) }
+    fun onRenderHUD(context: DrawContext) {
+        modules.filter { it.enabled }.forEach { it.onRenderHUD(context) }
     }
 }

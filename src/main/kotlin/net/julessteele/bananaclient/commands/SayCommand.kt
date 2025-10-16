@@ -11,7 +11,7 @@ class SayCommand: Command("say", "Says anything in chat.", ".say <message>") {
         if (args.isEmpty()) {
             sendUseCaseClientMsg(usage)
         } else {
-            CommandChatUtil.sendServerMsg(args.joinToString(" "))
+            CommandChatUtil.sendSafeServerMsg(args.joinToString(" "))
         }
     }
 }

@@ -4,12 +4,16 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext
 import net.julessteele.bananaclient.Banana
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.gui.DrawContext
+import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
 import net.minecraft.client.util.math.MatrixStack
 import org.lwjgl.glfw.GLFW.GLFW_KEY_UNKNOWN
 
 abstract class Module(val name: String, val description: String, val category: Category, keyCode: Int = GLFW_KEY_UNKNOWN) {
+
+    protected val client: MinecraftClient = MinecraftClient.getInstance()
 
     var enabled: Boolean = false
         private set
@@ -24,7 +28,7 @@ abstract class Module(val name: String, val description: String, val category: C
     open fun onDisable() { }
     open fun onTick() { }
     open fun onRenderEntity(matrices: MatrixStack, context: WorldRenderContext) { }
-    open fun onRenderHUD(mc: MinecraftClient, matrices: MatrixStack) { }
+    open fun onRenderHUD(context: DrawContext) { }
 
     fun toggle() {
         enabled = !enabled

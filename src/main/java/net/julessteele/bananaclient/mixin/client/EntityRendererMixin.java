@@ -14,14 +14,14 @@ public class EntityRendererMixin<T extends Entity> {
 
     @Inject(method = "getBlockLight", at = @At("HEAD"), cancellable = true)
     private void onGetBlockLight(T entity, BlockPos pos, CallbackInfoReturnable<Integer> cir) {
-        if (ModuleManager.INSTANCE.getModuleByName("Fullbright").getEnabled()) {
+        if (ModuleManager.INSTANCE.getModules("Fullbright", null).getFirst().getEnabled()) {
             cir.setReturnValue(15);
         }
     }
 
     @Inject(method = "getSkyLight", at = @At("HEAD"), cancellable = true)
     private void onGetSkyLight(T entity, BlockPos pos, CallbackInfoReturnable<Integer> cir) {
-        if (ModuleManager.INSTANCE.getModuleByName("Fullbright").getEnabled()) {
+        if (ModuleManager.INSTANCE.getModules("Fullbright", null).getFirst().getEnabled()) {
             cir.setReturnValue(15);
         }
     }

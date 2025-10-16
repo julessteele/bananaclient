@@ -3,6 +3,8 @@ package net.julessteele.bananaclient.commands
 import net.julessteele.bananaclient.command.Command
 import net.julessteele.bananaclient.command.CommandManager
 import net.julessteele.bananaclient.util.CommandChatUtil
+import net.julessteele.bananaclient.util.CommandChatUtil.sendClientMsg
+import net.julessteele.bananaclient.util.CommandChatUtil.sendUseCaseClientMsg
 
 class HelpCommand: Command("help", "Shows all commands or command usage.", ".help | .help <command>") {
 
@@ -13,7 +15,14 @@ class HelpCommand: Command("help", "Shows all commands or command usage.", ".hel
                 CommandChatUtil.sendClientMsg("§e.${it.name}§7 - ${it.description}")
             }
         } else {
-            CommandChatUtil.sendUseCaseClientMsg(CommandManager.getCommands(args[0]).first().usage.replaceFirstChar { it.uppercase() })
+            val cmdName = args[0]
+            val cmd: Command? = if (CommandManager.getCommands(cmdName).isEmpty()) { null } else { CommandManager.getCommands(cmdName).first() }
+
+            if (cmd != null) {
+                sendUseCaseClientMsg(cmd.usage)
+            } else {
+                sendClientMsg("There is no module titled \"$cmdName\". Please see .help for a list of all commands and their functions.")
+            }
         }
     }
 }

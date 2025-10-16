@@ -15,8 +15,8 @@ public class LightmapTextureManagerMixin {
 
     @Inject(method = "getGlTextureView", at = @At("HEAD"), cancellable = true)
     private void onGetGlTextureView(CallbackInfoReturnable<GpuTextureView> cir) {
-        Module fullbrightModule = ModuleManager.INSTANCE.getModuleByName("Fullbright");
-        if (fullbrightModule != null && fullbrightModule.getEnabled() && Fullbright.whiteTex != null) {
+        Module fullbrightModule = ModuleManager.INSTANCE.getModules("Fullbright", null).getFirst();
+        if (fullbrightModule.getEnabled() && Fullbright.whiteTex != null) {
             // Return the white texture's GlTextureView
             cir.setReturnValue(Fullbright.whiteTex.getGlTextureView());
         }

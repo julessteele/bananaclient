@@ -13,7 +13,7 @@ class ToggleCommand: Command("toggle", "Toggles a module.", ".toggle <module>") 
             return
         }
 
-        val module = ModuleManager.getModuleByName(args[0])
+        val module = ModuleManager.getModules(args.first()).first()
 
         if (module != null) {
             module.toggle()

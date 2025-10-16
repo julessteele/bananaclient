@@ -21,13 +21,9 @@ object CommandChatUtil {
     }
 
     // Sends a message to the server safely
-    fun sendServerMsg(message: String) {
-
-        val client = MinecraftClient.getInstance()
-        val player = client.player ?: return
-
+    fun sendSafeServerMsg(message: String) {
         suppressNext = true
-        player.networkHandler.sendChatMessage(message)
+        MinecraftClient.getInstance().player?.networkHandler?.sendChatMessage(message)
         suppressNext = false
     }
 }

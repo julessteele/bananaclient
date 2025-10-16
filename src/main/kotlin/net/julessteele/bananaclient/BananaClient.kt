@@ -2,12 +2,16 @@ package net.julessteele.bananaclient
 
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents
 import net.julessteele.bananaclient.command.CommandManager
 import net.julessteele.bananaclient.commands.HelpCommand
+import net.julessteele.bananaclient.commands.ListModulesCommand
 import net.julessteele.bananaclient.commands.SayCommand
 import net.julessteele.bananaclient.commands.ToggleCommand
 import net.julessteele.bananaclient.module.ModuleManager
+import net.julessteele.bananaclient.modules.hud.ModuleHudList
+import net.julessteele.bananaclient.modules.movement.Jesus
 import net.julessteele.bananaclient.modules.render.Fullbright
 import net.minecraft.client.MinecraftClient
 
@@ -15,15 +19,18 @@ object BananaClient : ClientModInitializer {
 
     override fun onInitializeClient() {
 
-        Banana.logger.info("Hello from the {} Client Mod Initializer!", Banana.NAME)
+        Banana.logger.info("Hello from the ${Banana.NAME} Client Mod Initializer!")
 
         // Register modules
         ModuleManager.register(Fullbright())
+        ModuleManager.register(Jesus())
+        ModuleManager.register(ModuleHudList())
 
         // Register commands
         CommandManager.register(HelpCommand())
         CommandManager.register(ToggleCommand())
         CommandManager.register(SayCommand())
+        CommandManager.register(ListModulesCommand())
 
         // Hook into ticks
         ClientTickEvents.END_CLIENT_TICK.register {
@@ -41,15 +48,11 @@ object BananaClient : ClientModInitializer {
         })
 
         // Hook into HUD rendering
-        WorldRenderEvents.LAST.register(WorldRenderEvents.Last { context ->
-            val matrices = context.matrixStack()
+        HudRenderCallback.EVENT.register { context, tickCounter ->
+            ModuleManager.onRenderHUD(context)
+        }
 
-            if (matrices != null)
-                ModuleManager.onRenderHUD(MinecraftClient.getInstance(), matrices)
-            else
-                Banana.logger.error("HUD RENDERING HOOK: Matrices were empty")
-        })
-
+        // Print that initializing is finished
         Banana.logger.info("${Banana.NAME} has finished setting up and has attached hooks...")
     }
 }

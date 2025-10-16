@@ -30,7 +30,7 @@ class Fullbright : Module("Fullbright", "Makes everything fully bright", Categor
             whiteTex = NativeImageBackedTexture({ "fullbright_white" }, image)
 
             // Register with the TextureManager
-            MinecraftClient.getInstance().textureManager.registerTexture(WHITE_TEX_ID, whiteTex!!)
+            client.textureManager.registerTexture(WHITE_TEX_ID, whiteTex!!)
         }
     }
 }
