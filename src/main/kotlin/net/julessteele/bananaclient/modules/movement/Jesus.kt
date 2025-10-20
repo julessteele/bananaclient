@@ -1,11 +1,12 @@
 package net.julessteele.bananaclient.modules.movement
 
+import net.julessteele.bananaclient.module.Category
 import net.julessteele.bananaclient.module.Module
 import net.minecraft.block.Blocks
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.util.math.BlockPos
 
-class Jesus : Module(name = "Jesus", description = "Allows the player to walk on water.", category = Category.MOVEMENT) {
+class Jesus : Module("Jesus", "Allows the player to walk on water.", Category.MOVEMENT) {
 
     private var lastY: Double? = null
     private var clientFallDistance = 0.0
@@ -37,7 +38,7 @@ class Jesus : Module(name = "Jesus", description = "Allows the player to walk on
             lastY = currentY
         }
 
-        // If we're falling a lot, don't force Jesus behavior (let player fall naturally)
+        // Let player fall into water if above threshold
         if (clientFallDistance > fallThreshold) return
 
         // Basic checks
@@ -49,7 +50,7 @@ class Jesus : Module(name = "Jesus", description = "Allows the player to walk on
 
         fun isWaterLike(block: net.minecraft.block.Block) = block == Blocks.WATER || block == Blocks.SEAGRASS || block == Blocks.TALL_SEAGRASS
 
-        // not above water-like block, nothing to do
+        // Not above waterlike block -> skip
         if (!isWaterLike(blockBelowState.block) && !isWaterLike(blockAboveState.block)) return
 
         // If submerged or water directly above, float up slightly

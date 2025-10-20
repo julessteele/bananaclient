@@ -1,6 +1,7 @@
 package net.julessteele.bananaclient.modules.render
 
 import net.julessteele.bananaclient.Banana
+import net.julessteele.bananaclient.module.Category
 import net.julessteele.bananaclient.module.Module
 import net.julessteele.bananaclient.module.ModuleManager
 import net.minecraft.client.MinecraftClient

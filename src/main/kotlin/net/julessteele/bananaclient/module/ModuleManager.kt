@@ -15,7 +15,7 @@ object ModuleManager {
     /**
      * Gets all modules, module by name, or module by category. Does NOT accept both.
      */
-    fun getModules(moduleName: String? = null, category: Module.Category? = null): List<Module> {
+    fun getModules(moduleName: String? = null, category: Category? = null): List<Module> {
         return if (moduleName == null && category == null) {
             modules
         } else if (moduleName == null && category != null) {

@@ -36,8 +36,8 @@ abstract class Module(val name: String, val description: String, val category: C
         else
             onDisable()
     }
+}
 
-    enum class Category {
-        RENDER, HUD, MOVEMENT, MISC
-    }
+enum class Category(val friendlyName: String) {
+    RENDER("Render"), HUD("HUD"), MOVEMENT("Movement"), MISC("Miscellaneous"), COMBAT("Combat")
 }
