@@ -1,8 +1,6 @@
 package net.julessteele.bananaclient.module
 
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext
 import net.julessteele.bananaclient.Banana
-import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.util.math.MatrixStack
 
@@ -40,8 +38,7 @@ object ModuleManager {
                 while (key.wasPressed()) {
                     module.toggle()
 
-                    // TODO FIX KEYBIND LOGGER FEEDBACK
-                    Banana.logger.info("${module.keybind} was pressed. Toggled ${module.name} -> ${module.enabled}")
+                    Banana.logger.info("Toggled ${module.name} -> ${module.enabled}")
                 }
             }
         }
@@ -50,8 +47,8 @@ object ModuleManager {
         modules.filter { it.enabled }.forEach { it.onTick() }
     }
 
-    fun onRenderEntity(matrices: MatrixStack, context: WorldRenderContext) {
-        modules.filter { it.enabled }.forEach { it.onRenderEntity(matrices, context) }
+    fun onRenderEntity(matrices: MatrixStack) {
+        modules.filter { it.enabled }.forEach { it.onRenderEntity(matrices) }
     }
 
     fun onRenderHUD(context: DrawContext) {

@@ -1,11 +1,10 @@
 package net.julessteele.bananaclient.module
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext
 import net.julessteele.bananaclient.Banana
+import net.julessteele.bananaclient.util.KeybindUtil
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
-import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
 import net.minecraft.client.util.math.MatrixStack
@@ -22,12 +21,12 @@ abstract class Module(val name: String, val description: String, val category: C
         "key.${Banana.MOD_ID}.${name.lowercase()}",
         InputUtil.Type.KEYSYM,
         keyCode,
-        "category.${Banana.MOD_ID}"))
+        KeybindUtil.bananaClientKeybindCategory))
 
     open fun onEnable() { }
     open fun onDisable() { }
     open fun onTick() { }
-    open fun onRenderEntity(matrices: MatrixStack, context: WorldRenderContext) { }
+    open fun onRenderEntity(matrices: MatrixStack) { }
     open fun onRenderHUD(context: DrawContext) { }
 
     fun toggle() {

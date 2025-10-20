@@ -2,12 +2,16 @@ package net.julessteele.bananaclient.modules.movement
 
 import net.julessteele.bananaclient.module.Module
 import net.minecraft.block.Blocks
+import net.minecraft.client.option.KeyBinding
 import net.minecraft.util.math.BlockPos
 
 class Jesus : Module(name = "Jesus", description = "Allows the player to walk on water.", category = Category.MOVEMENT) {
 
     private var lastY: Double? = null
     private var clientFallDistance = 0.0
+
+    // TODO add option to toggle jump ability while walking on water
+    private var canJump = true
 
     private val fallThreshold = 3.0
 
@@ -62,6 +66,10 @@ class Jesus : Module(name = "Jesus", description = "Allows the player to walk on
                 player.velocity = player.velocity.add(0.0, 0.1, 0.0)
             }
             player.setPos(player.x, pos.y + 0.99, player.z)
+        }
+
+        if (client.options.jumpKey.isPressed && this.canJump) {
+            player.jump()
         }
     }
 
