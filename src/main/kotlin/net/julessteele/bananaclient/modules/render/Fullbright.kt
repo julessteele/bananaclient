@@ -1,12 +1,10 @@
 package net.julessteele.bananaclient.modules.render
 
-import net.julessteele.bananaclient.Banana
 import net.julessteele.bananaclient.module.Category
 import net.julessteele.bananaclient.module.Module
-import net.julessteele.bananaclient.module.ModuleManager
-import net.minecraft.client.MinecraftClient
 import net.minecraft.client.texture.NativeImage
 import net.minecraft.client.texture.NativeImageBackedTexture
+import net.minecraft.util.Colors
 import net.minecraft.util.Identifier
 
 class Fullbright : Module("Fullbright", "Makes everything fully bright", Category.RENDER) {
@@ -23,7 +21,7 @@ class Fullbright : Module("Fullbright", "Makes everything fully bright", Categor
             val image = NativeImage(16, 16, false)
             for (x in 0 until 16) {
                 for (y in 0 until 16) {
-                    image.setColor(x, y, 0xFFFFFFFF.toInt())
+                    image.setColor(x, y, Colors.WHITE)
                 }
             }
 
@@ -31,7 +29,11 @@ class Fullbright : Module("Fullbright", "Makes everything fully bright", Categor
             whiteTex = NativeImageBackedTexture({ "fullbright_white" }, image)
 
             // Register with the TextureManager
-            client.textureManager.registerTexture(WHITE_TEX_ID, whiteTex!!)
+            client.textureManager.registerTexture(WHITE_TEX_ID, whiteTex)
         }
+    }
+
+    override fun onDisable() {
+        client.worldRenderer.reload()
     }
 }

@@ -15,6 +15,7 @@
     "client.EntityRendererMixin",
     "client.InGameHudMixin",
     "client.LightmapTextureManagerMixin",
-    "client.ParticleMixin"
+    "client.ParticleMixin",
+    "client.WorldRendererMixin"
   ]
 }

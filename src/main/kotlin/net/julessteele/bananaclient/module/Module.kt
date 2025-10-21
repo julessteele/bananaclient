@@ -31,13 +31,7 @@ abstract class Module(val name: String, val description: String, val category: C
     fun toggle() {
 
         enabled = !enabled
-
-        // Callbacks
-        if (enabled)
-            onEnable()
-        else
-            onDisable()
-
+        if (enabled) onEnable() else onDisable()
         // Save modules after toggling
         ModuleManager.saveModules()
     }

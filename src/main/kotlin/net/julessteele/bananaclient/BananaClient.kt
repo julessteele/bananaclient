@@ -13,8 +13,11 @@ import net.julessteele.bananaclient.modules.hud.ModuleHudList
 import net.julessteele.bananaclient.modules.movement.AirJump
 import net.julessteele.bananaclient.modules.movement.Jesus
 import net.julessteele.bananaclient.modules.render.Fullbright
+import net.minecraft.client.MinecraftClient
 
 object BananaClient : ClientModInitializer {
+
+    private var modulesActivated = false
 
     override fun onInitializeClient() {
 
@@ -33,8 +36,12 @@ object BananaClient : ClientModInitializer {
         CommandManager.register(SayCommand())
         CommandManager.register(ListModulesCommand())
 
-        // Hook into ticks
+        // Load module enabled states from last session
+        ModuleManager.loadModules()
+
+        // Hook into ticks and check if enabled on startup
         ClientTickEvents.END_CLIENT_TICK.register {
+            checkForFirstEnable(it)
             ModuleManager.onTick()
         }
 
@@ -42,10 +49,15 @@ object BananaClient : ClientModInitializer {
 
         // Hook into HUD rendering in net/julessteele/bananaclient/mixin/client/InGameHudMixin.java
 
-        // Load module enabled states from last session
-        ModuleManager.loadModules()
-
         // Print that initializing is finished
-        Banana.logger.info("${Banana.NAME} has finished setting up and has attached hooks...")
+        Banana.logger.info("${Banana.NAME} has finished setting up and has attached hooks... Client INIT Finished!")
+    }
+
+    private fun checkForFirstEnable(client: MinecraftClient) {
+        if (client.world != null && !modulesActivated) {
+            modulesActivated = true
+            ModuleManager.getModules().forEach { if (it.enabled) it.onEnable() }
+            Banana.logger.info("Activated saved modules after world load.")
+        }
     }
 }

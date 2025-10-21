@@ -7,6 +7,7 @@ import net.julessteele.bananaclient.Banana
 import net.julessteele.bananaclient.util.FileUtil
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.util.math.MatrixStack
+import java.io.FileOutputStream
 
 object ModuleManager {
 
@@ -64,8 +65,8 @@ object ModuleManager {
 
         try {
 
-            val content = FileUtil.banana_module_config_file.readText()
-            val obj: JsonObject = JsonParser.parseString(content).asJsonObject
+            val fileContent = FileUtil.banana_module_config_file.readText()
+            val jsonObject: JsonObject = JsonParser.parseString(fileContent).asJsonObject
 
             fun coerceBoolean(jsonElement: JsonElement?): Boolean? {
                 if (jsonElement == null || jsonElement.isJsonNull) return null
@@ -98,14 +99,12 @@ object ModuleManager {
             }
 
             modules.forEach {
-                val element = obj.get(it.name)
+                val element = jsonObject.get(it.name)
                 val elementBool = coerceBoolean(element)
                 if (elementBool != null) {
                     it.enabled = elementBool
-                    if (it.enabled) it.onEnable() else it.onDisable()
                 } else {
-                    // value missing or not coercible -> leave default or log
-                    println("Module config: couldn't parse value for '${it.name}' (raw=${element}); keeping default=${it.enabled}")
+                    Banana.logger.error("Module config: couldn't parse value for '${it.name}' (raw=${element}); keeping default=${it.enabled}")
                 }
             }
         } catch (e: Exception) {
@@ -116,8 +115,11 @@ object ModuleManager {
     fun saveModules() {
         try {
             if (!FileUtil.banana_module_config_file.parentFile.exists()) FileUtil.banana_module_config_file.parentFile.mkdirs()
-            val map = modules.associate { it.name to it.enabled }
-            FileUtil.banana_module_config_file.writeText(FileUtil.gson.toJson(map))
+            val json = FileUtil.gson.toJson(modules.associate { it.name to it.enabled })
+            FileOutputStream(FileUtil.banana_module_config_file).use {
+                it.write(json.toByteArray())
+                it.fd.sync() // Flush to disk immediately
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }

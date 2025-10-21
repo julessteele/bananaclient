@@ -1,7 +1,6 @@
 package net.julessteele.bananaclient.mixin.client;
 
 import net.julessteele.bananaclient.module.ModuleManager;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.state.EntityRenderState;
@@ -32,6 +31,7 @@ public abstract class EntityRendererMixin<T extends Entity, S extends EntityRend
         }
     }
 
+    // Hook onRenderEntity()
     @Inject(method = "render", at = @At("TAIL"))
     private void onRender(S renderState, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraState, CallbackInfo ci) {
         ModuleManager.INSTANCE.onRenderEntity(matrices);

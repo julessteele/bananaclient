@@ -1,7 +1,6 @@
 package net.julessteele.bananaclient.mixin.client;
 
 import com.mojang.blaze3d.textures.GpuTextureView;
-import net.julessteele.bananaclient.module.Module;
 import net.julessteele.bananaclient.module.ModuleManager;
 import net.julessteele.bananaclient.modules.render.Fullbright;
 import net.minecraft.client.render.LightmapTextureManager;
@@ -15,8 +14,7 @@ public class LightmapTextureManagerMixin {
 
     @Inject(method = "getGlTextureView", at = @At("HEAD"), cancellable = true)
     private void onGetGlTextureView(CallbackInfoReturnable<GpuTextureView> cir) {
-        Module fullbrightModule = ModuleManager.INSTANCE.getModules("Fullbright", null).getFirst();
-        if (fullbrightModule.getEnabled() && Fullbright.whiteTex != null) {
+        if (ModuleManager.INSTANCE.getModules("fullbright", null).getFirst().getEnabled() && Fullbright.whiteTex != null) {
             // Return the white texture's GlTextureView
             cir.setReturnValue(Fullbright.whiteTex.getGlTextureView());
         }
