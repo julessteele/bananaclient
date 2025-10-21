@@ -10,6 +10,7 @@ import net.julessteele.bananaclient.commands.ToggleCommand
 import net.julessteele.bananaclient.module.ModuleManager
 import net.julessteele.bananaclient.modules.hud.ClickGui
 import net.julessteele.bananaclient.modules.hud.ModuleHudList
+import net.julessteele.bananaclient.modules.movement.AirJump
 import net.julessteele.bananaclient.modules.movement.Jesus
 import net.julessteele.bananaclient.modules.render.Fullbright
 
@@ -24,6 +25,7 @@ object BananaClient : ClientModInitializer {
         ModuleManager.register(Jesus())
         ModuleManager.register(ModuleHudList())
         ModuleManager.register(ClickGui())
+        ModuleManager.register(AirJump())
 
         // Register commands
         CommandManager.register(HelpCommand())
@@ -39,6 +41,9 @@ object BananaClient : ClientModInitializer {
         // Hook into entity rendering in net/julessteele/bananaclient/mixin/client/EntityRendererMixin.java
 
         // Hook into HUD rendering in net/julessteele/bananaclient/mixin/client/InGameHudMixin.java
+
+        // Load module enabled states from last session
+        ModuleManager.loadModules()
 
         // Print that initializing is finished
         Banana.logger.info("${Banana.NAME} has finished setting up and has attached hooks...")

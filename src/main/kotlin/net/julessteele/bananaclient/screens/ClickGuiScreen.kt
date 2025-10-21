@@ -2,6 +2,7 @@ package net.julessteele.bananaclient.screens
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.julessteele.bananaclient.clickgui.ClickGuiConfig
 import net.julessteele.bananaclient.clickgui.Panel
 import net.julessteele.bananaclient.clickgui.components.ToggleButton
 import net.julessteele.bananaclient.module.Category
@@ -17,29 +18,43 @@ import kotlin.collections.forEach
 @Environment(EnvType.CLIENT)
 class ClickGuiScreen: Screen(Text.literal("ClickGUI")) {
 
-    private val panels = mutableListOf<Panel>()
-
     val moduleHeightInPanel = 14.0
 
-    // TODO Add variables to save position of panels
+    private val panels = mutableListOf<Panel>()
 
     init {
 
-        var xOffset = 10.0
+        // Load saved ClickGUI config
+        ClickGuiConfig.load()
 
         val width = 100.0
         val height = 160.0
 
+        var xOffset = 10.0
+
+        // Iterate through categories and draw them on screen
         Category.entries.forEach { category ->
 
-            var yOffset = 0.0 + moduleHeightInPanel
+            val savedPos = ClickGuiConfig.getPosition(category.name)
+            val x = savedPos?.first ?: xOffset
+            val y = savedPos?.second ?: 80.0
 
-            val panel = Panel(xOffset, 100.0, width, height, category)
+            val panel = Panel(x, y, width, height, category)
+            var yOffset = moduleHeightInPanel
 
             ModuleManager.getModules(null, category).forEach { module ->
-
-                panel.components.add(ToggleButton(xOffset, 100.0 + yOffset, 100.0, moduleHeightInPanel, panel, Text.of(module.name), module.enabled, module))
-
+                panel.components.add(
+                    ToggleButton(
+                        x,
+                        y + yOffset,
+                        width,
+                        moduleHeightInPanel,
+                        panel,
+                        Text.of(module.name),
+                        module.enabled,
+                        module
+                    )
+                )
                 yOffset += moduleHeightInPanel
             }
 
@@ -65,7 +80,11 @@ class ClickGuiScreen: Screen(Text.literal("ClickGUI")) {
 
     override fun mouseReleased(click: Click): Boolean {
 
-        panels.forEach { it.mouseReleased(click.x, click.y, click.button()) }
+        panels.forEach {
+            it.mouseReleased(click.x, click.y, click.button())
+            // Save positions of each panel after each time the mouse is released
+            ClickGuiConfig.setPosition(it.category.name, it.x, it.y)
+        }
 
         return super.mouseReleased(click)
     }

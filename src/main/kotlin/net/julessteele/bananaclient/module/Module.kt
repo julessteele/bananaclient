@@ -15,7 +15,6 @@ abstract class Module(val name: String, val description: String, val category: C
     protected val client: MinecraftClient = MinecraftClient.getInstance()
 
     var enabled: Boolean = false
-        private set
 
     val keybind: KeyBinding = KeyBindingHelper.registerKeyBinding(KeyBinding(
         "key.${Banana.MOD_ID}.${name.lowercase()}",
@@ -30,14 +29,16 @@ abstract class Module(val name: String, val description: String, val category: C
     open fun onRenderHUD(context: DrawContext) { }
 
     fun toggle() {
+
         enabled = !enabled
+
+        // Callbacks
         if (enabled)
             onEnable()
         else
             onDisable()
-    }
-}
 
-enum class Category(val friendlyName: String) {
-    RENDER("Render"), HUD("HUD"), MOVEMENT("Movement"), MISC("Miscellaneous"), COMBAT("Combat")
+        // Save modules after toggling
+        ModuleManager.saveModules()
+    }
 }

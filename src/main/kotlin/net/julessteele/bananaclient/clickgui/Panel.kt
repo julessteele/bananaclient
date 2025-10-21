@@ -47,7 +47,8 @@ class Panel(var x: Double, var y: Double, val width: Double, val height: Double,
             x = mouseX - dragOffset.x
             y = mouseY - dragOffset.y
 
-            var yOffset = 0.0 + ClickGuiScreen().moduleHeightInPanel
+            // Update position of components registered under panel
+            var yOffset = ClickGuiScreen().moduleHeightInPanel
 
             components.forEach {
 
