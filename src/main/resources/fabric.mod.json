@@ -8,8 +8,8 @@
 		"MysteriousLychee"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/julessteele/",
+		"sources": "https://github.com/julessteele/bananaclient"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/bananaclient/icon.png",

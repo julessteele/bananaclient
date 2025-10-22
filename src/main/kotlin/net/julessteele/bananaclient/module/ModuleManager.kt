@@ -7,6 +7,8 @@ import net.julessteele.bananaclient.Banana
 import net.julessteele.bananaclient.util.FileUtil
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.network.packet.Packet
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 import java.io.FileOutputStream
 
 object ModuleManager {
@@ -52,13 +54,11 @@ object ModuleManager {
         modules.filter { it.enabled }.forEach { it.onTick() }
     }
 
-    fun onRenderEntity(matrices: MatrixStack) {
-        modules.filter { it.enabled }.forEach { it.onRenderEntity(matrices) }
-    }
+    fun onRenderEntity(matrices: MatrixStack) = modules.filter { it.enabled }.forEach { it.onRenderEntity(matrices) }
 
-    fun onRenderHUD(context: DrawContext) {
-        modules.filter { it.enabled }.forEach { it.onRenderHUD(context) }
-    }
+    fun onRenderHUD(context: DrawContext) = modules.filter { it.enabled }.forEach { it.onRenderHUD(context) }
+
+    fun onPacket(packet: Packet<*>) = modules.filter { it.enabled }.forEach { it.onPacket(packet) }
 
     fun loadModules() {
         if (!FileUtil.banana_module_config_file.exists()) return

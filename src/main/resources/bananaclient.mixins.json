@@ -12,6 +12,7 @@
   },
   "client": [
     "client.ChatListenerMixin",
+    "client.ClientCommonNetworkHandlerMixin",
     "client.EntityRendererMixin",
     "client.InGameHudMixin",
     "client.LightmapTextureManagerMixin",

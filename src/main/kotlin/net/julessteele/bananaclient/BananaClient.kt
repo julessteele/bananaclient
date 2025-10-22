@@ -11,6 +11,7 @@ import net.julessteele.bananaclient.module.ModuleManager
 import net.julessteele.bananaclient.modules.hud.ClickGui
 import net.julessteele.bananaclient.modules.hud.ModuleHudList
 import net.julessteele.bananaclient.modules.movement.AirJump
+import net.julessteele.bananaclient.modules.movement.Blink
 import net.julessteele.bananaclient.modules.movement.Jesus
 import net.julessteele.bananaclient.modules.render.Fullbright
 import net.minecraft.client.MinecraftClient
@@ -29,6 +30,7 @@ object BananaClient : ClientModInitializer {
         ModuleManager.register(ModuleHudList())
         ModuleManager.register(ClickGui())
         ModuleManager.register(AirJump())
+        ModuleManager.register(Blink())
 
         // Register commands
         CommandManager.register(HelpCommand())
