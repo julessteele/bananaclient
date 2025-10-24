@@ -19,19 +19,13 @@ object ModuleManager {
         modules.add(module)
     }
 
-    /**
-     * Gets all modules, module by name, or module by category. Does NOT accept both.
-     */
-    fun getModules(moduleName: String? = null, category: Category? = null): List<Module> {
-        return if (moduleName == null && category == null) {
-            modules
-        } else if (moduleName == null && category != null) {
-            modules.filter { it.category == category }
-        } else if (category == null) {
-            modules.filter { it.name.equals(moduleName, ignoreCase = true) }
+    fun getModule(name: String): Module? = modules.find { it.name == name }
+
+    fun getModules(category: Category? = null): List<Module> {
+        return if (category == null) {
+            this.modules
         } else {
-            Banana.logger.warn("Cannot get module from both name and category, please provide one.")
-            return emptyList()
+            this.modules.filter { it.category == category }
         }
     }
 
@@ -57,8 +51,6 @@ object ModuleManager {
     fun onRenderEntity(matrices: MatrixStack) = modules.filter { it.enabled }.forEach { it.onRenderEntity(matrices) }
 
     fun onRenderHUD(context: DrawContext) = modules.filter { it.enabled }.forEach { it.onRenderHUD(context) }
-
-    fun onPacket(packet: Packet<*>) = modules.filter { it.enabled }.forEach { it.onPacket(packet) }
 
     fun loadModules() {
         if (!FileUtil.banana_module_config_file.exists()) return

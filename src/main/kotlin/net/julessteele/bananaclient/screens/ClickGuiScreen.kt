@@ -42,18 +42,9 @@ class ClickGuiScreen: Screen(Text.literal("ClickGUI")) {
             val panel = Panel(x, y, width, height, category)
             var yOffset = moduleHeightInPanel
 
-            ModuleManager.getModules(null, category).forEach { module ->
+            ModuleManager.getModules(category).forEach { module ->
                 panel.components.add(
-                    ToggleButton(
-                        x,
-                        y + yOffset,
-                        width,
-                        moduleHeightInPanel,
-                        panel,
-                        Text.of(module.name),
-                        module.enabled,
-                        module
-                    )
+                    ToggleButton(x, y + yOffset, width, moduleHeightInPanel, panel, Text.of(module.name), module.enabled, module)
                 )
                 yOffset += moduleHeightInPanel
             }

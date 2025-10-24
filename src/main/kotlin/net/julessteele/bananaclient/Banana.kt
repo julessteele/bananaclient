@@ -4,7 +4,7 @@ import net.fabricmc.api.ModInitializer
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-object Banana : ModInitializer {
+object Banana: ModInitializer {
 
     const val NAME: String = "Banana Client"
     const val MOD_ID: String = "bananaclient"

@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ParticleMixin {
     @Inject(method = "getBrightness", at = @At("RETURN"), cancellable = true)
     private void forceFullbright(float tint, CallbackInfoReturnable<Integer> cir) {
-        if (ModuleManager.INSTANCE.getModules("Fullbright", null).getFirst().getEnabled()) {
+        if (ModuleManager.INSTANCE.getModule("fullbright").getEnabled()) {
             cir.setReturnValue(0xF000F0); // max lightmap
         }
     }

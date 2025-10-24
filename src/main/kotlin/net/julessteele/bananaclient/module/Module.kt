@@ -8,7 +8,6 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.network.packet.Packet
 import org.lwjgl.glfw.GLFW.GLFW_KEY_UNKNOWN
 
 abstract class Module(val name: String, val description: String, val category: Category, keyCode: Int = GLFW_KEY_UNKNOWN) {
@@ -28,7 +27,6 @@ abstract class Module(val name: String, val description: String, val category: C
     open fun onTick() { }
     open fun onRenderEntity(matrices: MatrixStack) { }
     open fun onRenderHUD(context: DrawContext) { }
-    open fun onPacket(packet: Packet<*>) { }
 
     fun toggle() {
 

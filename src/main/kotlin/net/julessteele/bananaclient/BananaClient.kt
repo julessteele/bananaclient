@@ -52,14 +52,14 @@ object BananaClient : ClientModInitializer {
         // Hook into HUD rendering in net/julessteele/bananaclient/mixin/client/InGameHudMixin.java
 
         // Print that initializing is finished
-        Banana.logger.info("${Banana.NAME} has finished setting up and has attached hooks... Client INIT Finished!")
+        Banana.logger.info("${Banana.NAME} has finished registering modules/commands and has attached hooks... Client INIT Finished!")
     }
 
     private fun checkForFirstEnable(client: MinecraftClient) {
         if (client.world != null && !modulesActivated) {
             modulesActivated = true
             ModuleManager.getModules().forEach { if (it.enabled) it.onEnable() }
-            Banana.logger.info("Activated saved modules after world load.")
+            Banana.logger.info("fun checkForFirstEnable -> Activated saved modules after world load.")
         }
     }
 }
