@@ -22,7 +22,7 @@ class Slider(x: Double, y: Double, width: Double, height: Double, val label: Tex
         context.fill(x.toInt(), y.toInt(), (x + fillWidth).toInt(), (y + height).toInt(), 0xFF00AAFF.toInt())
 
         // Draw label + value
-        context.drawTextWithShadow(MinecraftClient.getInstance().textRenderer, Text.of("${label.string}: ${"%.2f".format(value)}"), (x + 2).toInt(), (y + 2).toInt(), 0xFFFFFFFF.toInt())
+        context.drawTextWithShadow(MinecraftClient.getInstance().textRenderer, Text.of("${label.string}: ${"%.2f".format(value)}"), (x + 2).toInt(), (y + 3).toInt(), 0xFFFFFFFF.toInt())
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int) {

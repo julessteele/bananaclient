@@ -1,6 +1,6 @@
 package net.julessteele.bananaclient.mixin.client;
 
-import net.julessteele.bananaclient.module.ModuleManager;
+import net.julessteele.bananaclient.modules.module.ModuleManager;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.state.EntityRenderState;
@@ -19,6 +19,7 @@ public abstract class EntityRendererMixin<T extends Entity, S extends EntityRend
 
     @Inject(method = "getBlockLight", at = @At("HEAD"), cancellable = true)
     private void onGetBlockLight(T entity, BlockPos pos, CallbackInfoReturnable<Integer> cir) {
+        if (ModuleManager.INSTANCE.getModule("fullbright") == null) return;
         if (ModuleManager.INSTANCE.getModule("fullbright").getEnabled()) {
             cir.setReturnValue(15);
         }
@@ -26,6 +27,7 @@ public abstract class EntityRendererMixin<T extends Entity, S extends EntityRend
 
     @Inject(method = "getSkyLight", at = @At("HEAD"), cancellable = true)
     private void onGetSkyLight(T entity, BlockPos pos, CallbackInfoReturnable<Integer> cir) {
+        if (ModuleManager.INSTANCE.getModule("fullbright") == null) return;
         if (ModuleManager.INSTANCE.getModule("fullbright").getEnabled()) {
             cir.setReturnValue(15);
         }

@@ -1,34 +1,27 @@
 package net.julessteele.bananaclient.mixin.client;
 
-import net.julessteele.bananaclient.module.ModuleManager;
+import net.julessteele.bananaclient.modules.module.ModuleManager;
 import net.julessteele.bananaclient.modules.movement.Blink;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import org.spongepowered.asm.mixin.*;
-
-import java.util.List;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientConnection.class)
 public abstract class ClientConnectionMixin {
 
-    /**
-     * @author MysteriousLychee
-     * @reason Provide hooks for bananaclient packet functionality
-     */
-    @Overwrite
-    public void send(Packet<?> packet) {
+    @Inject(method = "send(Lnet/minecraft/network/packet/Packet;)V", at = @At("HEAD"), cancellable = true)
+    private void onSend(Packet<?> packet, CallbackInfo ci) {
         if (packet instanceof PlayerMoveC2SPacket) {
-            Blink blink = ((Blink)(ModuleManager.INSTANCE.getModule("blink")));
-            assert blink != null;
-            if (blink.getEnabled()) {
-                List<Packet<?>> packetList = blink.getPackets();
-                packetList.add(packet);
-                blink.setPackets(packetList);
+            Blink blink = (Blink) ModuleManager.INSTANCE.getModule("blink");
+            if (blink != null && blink.getEnabled()) {
+                blink.getPackets().add(packet);
+                // Cancel the packet so it's not sent to the server
+                ci.cancel();
             }
-        } else {
-            MinecraftClient.getInstance().getNetworkHandler().getConnection().send(packet, null);
         }
     }
 }

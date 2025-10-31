@@ -7,7 +7,7 @@ import net.julessteele.bananaclient.commands.HelpCommand
 import net.julessteele.bananaclient.commands.ListModulesCommand
 import net.julessteele.bananaclient.commands.SayCommand
 import net.julessteele.bananaclient.commands.ToggleCommand
-import net.julessteele.bananaclient.module.ModuleManager
+import net.julessteele.bananaclient.modules.module.ModuleManager
 import net.julessteele.bananaclient.modules.hud.ClickGui
 import net.julessteele.bananaclient.modules.hud.ModuleHudList
 import net.julessteele.bananaclient.modules.movement.AirJump

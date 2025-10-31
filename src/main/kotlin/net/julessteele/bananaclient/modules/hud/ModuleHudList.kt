@@ -1,8 +1,8 @@
 package net.julessteele.bananaclient.modules.hud
 
-import net.julessteele.bananaclient.module.Category
-import net.julessteele.bananaclient.module.Module
-import net.julessteele.bananaclient.module.ModuleManager
+import net.julessteele.bananaclient.modules.module.Category
+import net.julessteele.bananaclient.modules.module.Module
+import net.julessteele.bananaclient.modules.module.ModuleManager
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.text.Text
 import net.minecraft.util.Colors

@@ -1,4 +1,4 @@
-package net.julessteele.bananaclient.module
+package net.julessteele.bananaclient.modules.module
 
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
@@ -7,8 +7,6 @@ import net.julessteele.bananaclient.Banana
 import net.julessteele.bananaclient.util.FileUtil
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.network.packet.Packet
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 import java.io.FileOutputStream
 
 object ModuleManager {
@@ -19,7 +17,7 @@ object ModuleManager {
         modules.add(module)
     }
 
-    fun getModule(name: String): Module? = modules.find { it.name == name }
+    fun getModule(name: String): Module? = modules.find { it.name.equals(name, ignoreCase = true) }
 
     fun getModules(category: Category? = null): List<Module> {
         return if (category == null) {

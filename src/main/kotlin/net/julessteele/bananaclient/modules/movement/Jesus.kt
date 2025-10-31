@@ -1,9 +1,9 @@
 package net.julessteele.bananaclient.modules.movement
 
-import net.julessteele.bananaclient.module.Category
-import net.julessteele.bananaclient.module.Module
+import net.julessteele.bananaclient.modules.module.Category
+import net.julessteele.bananaclient.modules.module.Module
+import net.julessteele.bananaclient.settings.setting.NumberSetting
 import net.minecraft.block.Blocks
-import net.minecraft.client.option.KeyBinding
 import net.minecraft.util.math.BlockPos
 
 class Jesus : Module("Jesus", "Allows the player to walk on water.", Category.MOVEMENT) {
@@ -15,6 +15,10 @@ class Jesus : Module("Jesus", "Allows the player to walk on water.", Category.MO
     private var canJump = true
 
     private val fallThreshold = 3.0
+
+    init {
+        registerSetting(NumberSetting("Y-Boost", 1.5, 0.0, 5.0))
+    }
 
     override fun onTick() {
 
@@ -81,7 +85,9 @@ class Jesus : Module("Jesus", "Allows the player to walk on water.", Category.MO
 
         val pos = BlockPos.ofFloored(player.x, player.y - 0.1, player.z)
         if (world.getBlockState(pos).block == Blocks.WATER) {
-            player.setPos(player.x, pos.y + 1.5, player.z)
+            // Give player boost to get out of water on disable
+            val yBoost: Double = (this.getSetting("Y-Boost") as NumberSetting).value as Double
+            player.setPos(player.x, pos.y + yBoost, player.z)
         }
 
         // Reset

@@ -1,7 +1,7 @@
 package net.julessteele.bananaclient.commands
 
 import net.julessteele.bananaclient.command.Command
-import net.julessteele.bananaclient.module.ModuleManager
+import net.julessteele.bananaclient.modules.module.ModuleManager
 import net.julessteele.bananaclient.util.CommandChatUtil.sendClientMsg
 import net.julessteele.bananaclient.util.CommandChatUtil.sendUseCaseClientMsg
 

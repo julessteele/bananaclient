@@ -1,7 +1,7 @@
 package net.julessteele.bananaclient.modules.movement
 
-import net.julessteele.bananaclient.module.Category
-import net.julessteele.bananaclient.module.Module
+import net.julessteele.bananaclient.modules.module.Category
+import net.julessteele.bananaclient.modules.module.Module
 import net.minecraft.client.option.KeyBinding
 
 class AirJump: Module("AirJump", "Allows the player to jump on the air.", Category.MOVEMENT) {

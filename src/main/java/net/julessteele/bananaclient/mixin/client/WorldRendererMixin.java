@@ -1,6 +1,6 @@
 package net.julessteele.bananaclient.mixin.client;
 
-import net.julessteele.bananaclient.module.ModuleManager;
+import net.julessteele.bananaclient.modules.module.ModuleManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.util.math.BlockPos;
@@ -15,6 +15,7 @@ public class WorldRendererMixin {
 
     @Inject(method = "getLightmapCoordinates(Lnet/minecraft/client/render/WorldRenderer$BrightnessGetter;Lnet/minecraft/world/BlockRenderView;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;)I", at = @At("HEAD"), cancellable = true)
     private static void onGetLightmapCoordinates(WorldRenderer.BrightnessGetter brightnessGetter, BlockRenderView world, BlockState state, BlockPos pos, CallbackInfoReturnable<Integer> cir) {
+        if (ModuleManager.INSTANCE.getModule("fullbright") == null) return;
         if (ModuleManager.INSTANCE.getModule("fullbright").getEnabled()) {
             cir.setReturnValue(0xF000F0);
         }

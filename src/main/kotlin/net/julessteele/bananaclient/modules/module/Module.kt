@@ -1,7 +1,8 @@
-package net.julessteele.bananaclient.module
+package net.julessteele.bananaclient.modules.module
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.julessteele.bananaclient.Banana
+import net.julessteele.bananaclient.settings.Setting
 import net.julessteele.bananaclient.util.KeybindUtil
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
@@ -15,6 +16,8 @@ abstract class Module(val name: String, val description: String, val category: C
     protected val client: MinecraftClient = MinecraftClient.getInstance()
 
     var enabled: Boolean = false
+
+    private val settings = mutableListOf<Setting>()
 
     val keybind: KeyBinding = KeyBindingHelper.registerKeyBinding(KeyBinding(
         "key.${Banana.MOD_ID}.${name.lowercase()}",
@@ -35,4 +38,12 @@ abstract class Module(val name: String, val description: String, val category: C
         // Save modules after toggling
         ModuleManager.saveModules()
     }
+
+    fun registerSetting(setting: Setting) {
+        settings.add(setting)
+    }
+
+    fun getSetting(name: String): Setting? = settings.find { it.name.equals(name, ignoreCase = true) }
+
+    fun getSettings() = settings
 }

@@ -1,6 +1,6 @@
 package net.julessteele.bananaclient.mixin.client;
 
-import net.julessteele.bananaclient.module.ModuleManager;
+import net.julessteele.bananaclient.modules.module.ModuleManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
