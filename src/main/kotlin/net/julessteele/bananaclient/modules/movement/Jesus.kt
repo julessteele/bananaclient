@@ -2,22 +2,21 @@ package net.julessteele.bananaclient.modules.movement
 
 import net.julessteele.bananaclient.modules.module.Category
 import net.julessteele.bananaclient.modules.module.Module
+import net.julessteele.bananaclient.settings.setting.BooleanSetting
 import net.julessteele.bananaclient.settings.setting.NumberSetting
 import net.minecraft.block.Blocks
 import net.minecraft.util.math.BlockPos
 
-class Jesus : Module("Jesus", "Allows the player to walk on water.", Category.MOVEMENT) {
+class Jesus: Module("Jesus", "Allows the player to walk on water.", Category.MOVEMENT) {
 
     private var lastY: Double? = null
     private var clientFallDistance = 0.0
 
-    // TODO add option to toggle jump ability while walking on water
-    private var canJump = true
-
     private val fallThreshold = 3.0
 
     init {
-        registerSetting(NumberSetting("Y-Boost", 1.5, 0.0, 5.0))
+        registerSetting(NumberSetting("Y-Boost", 1.5, 1.0, 2.0))
+        registerSetting(BooleanSetting("Can Jump", true))
     }
 
     override fun onTick() {
@@ -73,7 +72,8 @@ class Jesus : Module("Jesus", "Allows the player to walk on water.", Category.MO
             player.setPos(player.x, pos.y + 0.99, player.z)
         }
 
-        if (client.options.jumpKey.isPressed && this.canJump) {
+        // Check if the player is allowed to jump on water based on settings
+        if (client.options.jumpKey.isPressed && ((getSetting("Can Jump")?.value ?: true) as Boolean)) {
             player.jump()
         }
     }

@@ -2,11 +2,12 @@ package net.julessteele.bananaclient.clickgui.components
 
 import net.julessteele.bananaclient.clickgui.Component
 import net.julessteele.bananaclient.clickgui.Panel
+import net.julessteele.bananaclient.modules.module.Module
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.text.Text
 
-class Slider(x: Double, y: Double, width: Double, height: Double, val label: Text, var min: Double, var max: Double, var value: Double, parent: Panel): Component(x, y, width, height, parent) {
+class Slider(x: Double, y: Double, width: Double, height: Double, val label: Text, var min: Double, var max: Double, var value: Double, val module: Module, parent: Panel): Component(x, y, width, height, parent) {
 
     var dragging = false
 
@@ -31,6 +32,7 @@ class Slider(x: Double, y: Double, width: Double, height: Double, val label: Tex
 
     override fun mouseReleased(mouseX: Double, mouseY: Double, button: Int) {
         dragging = false
+        module.getSetting(label.string)?.value = value
     }
 
     override fun mouseDragged(mouseX: Double, mouseY: Double, button: Int) {

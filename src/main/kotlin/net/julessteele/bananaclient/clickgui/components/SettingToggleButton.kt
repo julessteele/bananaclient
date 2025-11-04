@@ -13,22 +13,22 @@ class SettingToggleButton(x: Double, y: Double, width: Double, height: Double, p
 
         super.render(context, mouseX, mouseY, parent)
 
-        val color = if (enabled) Colors.GREEN + 40 else if (hovered) 0xFF777777.toInt() else 0xFFAAAAAA.toInt()
+        val color = if (parentModule.getSetting(parentModule.name)?.value as Boolean) Colors.GREEN + 40 else if (hovered) 0xFF777777.toInt() else 0xFFAAAAAA.toInt()
 
         // Draw background
         context.fill(x.toInt(), y.toInt(), (x + width).toInt(), (y + height).toInt(), color)
 
         // Draw text
-        context.drawCenteredTextWithShadow(client.textRenderer, settingName, (x + width/2).toInt(), (y + height / 2 - 4).toInt(), 0xFFFFFFFF.toInt())
+        context.drawTextWithShadow(client.textRenderer, settingName, (x + 3).toInt(), (y + height / 2 - 4).toInt(), 0xFFFFFFFF.toInt())
     }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int) {
-        if (hovered) {
-            toggle(settingName.string)
-        }
+        if (hovered)
+            toggle(settingName)
     }
 
-    fun toggle(setting: String) {
-        parentModule.getSetting(setting)?.value = !(parentModule.getSetting(setting)?.value as Boolean)
+    fun toggle(setting: Text) {
+        parentModule.getSetting(setting.string)?.value = !(parentModule.getSetting(setting.string)?.value as Boolean)
+        parentModule.getSetting(setting.string)?.value = enabled
     }
 }

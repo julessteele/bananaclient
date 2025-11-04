@@ -26,7 +26,6 @@ import kotlin.collections.forEach
 class ClickGuiScreen: Screen(Text.of("ClickGUI")) {
 
     val moduleHeightInPanel = 14.0
-    var yOffset = moduleHeightInPanel
 
     private val panels = mutableListOf<Panel>()
 
@@ -46,9 +45,11 @@ class ClickGuiScreen: Screen(Text.of("ClickGUI")) {
 
             val savedPos = ClickGuiConfig.getPosition(category.name)
             val x = savedPos?.first ?: xOffset
-            val y = savedPos?.second ?: 80.0
+            val y = savedPos?.second ?: 10.0
 
             val panel = Panel(Vector2d(x, y), width, height, category)
+
+            var yOffset = moduleHeightInPanel
 
             // Iterate through the modules in the current category and draw them
             ModuleManager.getModules(category).forEach { module ->
@@ -86,6 +87,7 @@ class ClickGuiScreen: Screen(Text.of("ClickGUI")) {
                                     setting.min,
                                     setting.max,
                                     setting.value as Double,
+                                    module,
                                     panel))
 
                                 yOffset += moduleHeightInPanel
