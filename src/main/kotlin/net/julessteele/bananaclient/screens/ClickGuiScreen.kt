@@ -72,7 +72,7 @@ class ClickGuiScreen: Screen(Text.of("ClickGUI")) {
                                     panel,
                                     module,
                                     Text.of(setting.name),
-                                    false))
+                                    setting.value as Boolean))
 
                                 yOffset += moduleHeightInPanel
                             }
