@@ -8,7 +8,7 @@ import org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT_SHIFT
 class ClickGui: Module("ClickGUI", "A click GUI to enable modules with.", Category.HUD, GLFW_KEY_RIGHT_SHIFT) {
 
     override fun onEnable() {
-        toggle()
+        enabled = false
         openClickGuiScreen()
     }
 }

@@ -73,7 +73,7 @@ class Jesus: Module("Jesus", "Allows the player to walk on water.", Category.MOV
         }
 
         // Check if the player is allowed to jump on water based on settings
-        if (client.options.jumpKey.isPressed && ((getSetting("Can Jump")?.value ?: true) as Boolean)) {
+        if (client.options.jumpKey.isPressed && ((findSetting("Can Jump")?.value ?: true) as Boolean)) {
             player.jump()
         }
     }
@@ -86,7 +86,7 @@ class Jesus: Module("Jesus", "Allows the player to walk on water.", Category.MOV
         val pos = BlockPos.ofFloored(player.x, player.y - 0.1, player.z)
         if (world.getBlockState(pos).block == Blocks.WATER) {
             // Give player boost to get out of water on disable
-            val yBoost: Double = (this.getSetting("Y-Boost") as NumberSetting).value as Double
+            val yBoost: Double = (this.findSetting("Y-Boost") as NumberSetting).value as Double
             player.setPos(player.x, pos.y + yBoost, player.z)
         }
 

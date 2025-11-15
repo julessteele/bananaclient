@@ -1,17 +1,17 @@
-package net.julessteele.bananaclient.clickgui.components
+package net.julessteele.bananaclient.clickgui.components.setting
 
-import net.julessteele.bananaclient.clickgui.Component
 import net.julessteele.bananaclient.clickgui.Panel
+import net.julessteele.bananaclient.clickgui.SettingComponent
 import net.julessteele.bananaclient.settings.setting.ModeSetting
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.text.Text
 import net.minecraft.util.Colors
 
-class ModeButton(x: Double, y: Double, width: Double, height: Double, parent: Panel, val label: String, var setting: ModeSetting): Component(x, y, width, height, parent) {
+class ModeButton(x: Double, y: Double, width: Double, height: Double, parent: Panel, val label: String, var setting: ModeSetting): SettingComponent(x, y, width, height, parent) {
 
-    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, parent: Panel) {
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int) {
 
-        super.render(context, mouseX, mouseY, parent)
+        super.render(context, mouseX, mouseY)
 
         val color = if (hovered) Colors.DARK_GRAY else Colors.GRAY
 

@@ -1,17 +1,17 @@
-package net.julessteele.bananaclient.clickgui.components
+package net.julessteele.bananaclient.clickgui.components.setting
 
-import net.julessteele.bananaclient.clickgui.Component
 import net.julessteele.bananaclient.clickgui.Panel
+import net.julessteele.bananaclient.clickgui.SettingComponent
 import net.julessteele.bananaclient.modules.module.Module
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.text.Text
 import net.minecraft.util.Colors
 
-class SettingToggleButton(x: Double, y: Double, width: Double, height: Double, parentPanel: Panel, val parentModule: Module, val settingName: Text, var enabled: Boolean): Component(x, y, width, height, parentPanel) {
+class SettingToggleButton(x: Double, y: Double, width: Double, height: Double, parent: Panel, val module: Module, val settingName: Text, var enabled: Boolean): SettingComponent(x, y, width, height, parent) {
 
-    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, parent: Panel) {
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int) {
 
-        super.render(context, mouseX, mouseY, parent)
+        super.render(context, mouseX, mouseY)
 
         val color = if (enabled) Colors.GREEN + 40 else if (hovered) 0xFF777777.toInt() else 0xFFAAAAAA.toInt()
 
@@ -29,6 +29,6 @@ class SettingToggleButton(x: Double, y: Double, width: Double, height: Double, p
 
     fun toggle(setting: Text) {
         enabled = !enabled
-        parentModule.getSetting(setting.string)?.value = enabled
+        module.findSetting(setting.string)?.value = enabled
     }
 }

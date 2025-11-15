@@ -2,6 +2,7 @@ package net.julessteele.bananaclient.modules.module
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.julessteele.bananaclient.Banana
+import net.julessteele.bananaclient.clickgui.SettingComponent
 import net.julessteele.bananaclient.settings.Setting
 import net.julessteele.bananaclient.util.KeybindUtil
 import net.minecraft.client.MinecraftClient
@@ -17,7 +18,10 @@ abstract class Module(val name: String, val description: String, val category: C
 
     var enabled: Boolean = false
 
+    // Settings -> List of Settings used for manipulating changeable values of modules, registered in module init { }
     private val settings = mutableListOf<Setting>()
+    // Children -> List of SettingComponents used for rendering buttons of settings on the ClickGUI, added automatically when ClickGUI is initialized
+    val children = mutableListOf<SettingComponent>()
 
     val keybind: KeyBinding = KeyBindingHelper.registerKeyBinding(KeyBinding(
         "key.${Banana.MOD_ID}.${name.lowercase()}",
@@ -32,18 +36,16 @@ abstract class Module(val name: String, val description: String, val category: C
     open fun onRenderHUD(context: DrawContext) { }
 
     fun toggle() {
-
         enabled = !enabled
         if (enabled) onEnable() else onDisable()
         // Save modules after toggling
         ModuleManager.saveModules()
     }
 
-    fun registerSetting(setting: Setting) {
-        settings.add(setting)
-    }
-
-    fun getSetting(name: String): Setting? = settings.find { it.name.equals(name, ignoreCase = true) }
-
+    // Register settings in module init { }
+    fun registerSetting(setting: Setting) = settings.add(setting)
+    fun findSetting(name: String): Setting? = settings.find { it.name.equals(name, ignoreCase = true) }
     fun getSettings() = settings
+
+    fun findChild(settingComponent: SettingComponent): SettingComponent? = children.find { it.javaClass.simpleName.equals(settingComponent.javaClass.simpleName, ignoreCase = true) }
 }

@@ -2,13 +2,12 @@ package net.julessteele.bananaclient.screens
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.julessteele.bananaclient.Banana
 import net.julessteele.bananaclient.clickgui.ClickGuiConfig
 import net.julessteele.bananaclient.clickgui.Panel
-import net.julessteele.bananaclient.clickgui.components.ModeButton
+import net.julessteele.bananaclient.clickgui.components.setting.ModeButton
 import net.julessteele.bananaclient.clickgui.components.ModuleToggleButton
-import net.julessteele.bananaclient.clickgui.components.SettingToggleButton
-import net.julessteele.bananaclient.clickgui.components.Slider
+import net.julessteele.bananaclient.clickgui.components.setting.SettingToggleButton
+import net.julessteele.bananaclient.clickgui.components.setting.Slider
 import net.julessteele.bananaclient.modules.module.Category
 import net.julessteele.bananaclient.modules.module.ModuleManager
 import net.julessteele.bananaclient.settings.SettingType
@@ -25,7 +24,8 @@ import kotlin.collections.forEach
 @Environment(EnvType.CLIENT)
 class ClickGuiScreen: Screen(Text.of("ClickGUI")) {
 
-    val moduleHeightInPanel = 14.0
+    // Defined in ClickGuiScreen & Panel
+    val buttonHeight = 14.0
 
     private val panels = mutableListOf<Panel>()
 
@@ -34,7 +34,7 @@ class ClickGuiScreen: Screen(Text.of("ClickGUI")) {
         // Load saved ClickGUI config
         ClickGuiConfig.load()
 
-        /********************** Handle All ClickGuiDrawing *****************************/
+        /************************ Handle All ClickGuiDrawing *****************************/
         val width = 100.0
         val height = 160.0
 
@@ -49,40 +49,42 @@ class ClickGuiScreen: Screen(Text.of("ClickGUI")) {
 
             val panel = Panel(Vector2d(x, y), width, height, category)
 
-            var yOffset = moduleHeightInPanel
+            var yOffset = buttonHeight
 
             // Iterate through the modules in the current category and draw them
             ModuleManager.getModules(category).forEach { module ->
 
-                val moduleToggleButton = ModuleToggleButton(x, y + yOffset, width, moduleHeightInPanel, panel, module)
+                // Add all buttons for module in current category
+                panel.components.add(ModuleToggleButton(x, y + yOffset, width, buttonHeight, panel, module))
+                // Increment yOffset for next draw by the height of each drawn button
+                yOffset += buttonHeight
 
-                panel.components.add(moduleToggleButton)
-                yOffset += moduleHeightInPanel
+                var yOffsetChild = 0.0
 
-                // Add settings
-                if (!module.getSettings().isEmpty()) {
+                // Add children buttons for all settings in each module when added and initialized
+                if (!module.getSettings().isEmpty() && module.children.isEmpty()) {
                     module.getSettings().forEach { setting ->
                         when (setting.settingType) {
                             SettingType.BOOLEAN -> {
-                                panel.components.add(SettingToggleButton(
-                                    x,
-                                    y + yOffset,
+                                module.children.add(SettingToggleButton(
+                                    x + width,
+                                    y + yOffset + yOffsetChild - buttonHeight,
                                     width,
-                                    moduleHeightInPanel,
+                                    buttonHeight,
                                     panel,
                                     module,
                                     Text.of(setting.name),
                                     setting.value as Boolean))
 
-                                yOffset += moduleHeightInPanel
+                                yOffsetChild += buttonHeight
                             }
                             SettingType.NUMBER -> {
                                 setting as NumberSetting
-                                panel.components.add(Slider(
-                                    x,
-                                    y + yOffset,
+                                module.children.add(Slider(
+                                    x + width,
+                                    y + yOffset + yOffsetChild - buttonHeight,
                                     width,
-                                    moduleHeightInPanel,
+                                    buttonHeight,
                                     Text.of(setting.name),
                                     setting.min,
                                     setting.max,
@@ -90,22 +92,21 @@ class ClickGuiScreen: Screen(Text.of("ClickGUI")) {
                                     module,
                                     panel))
 
-                                yOffset += moduleHeightInPanel
+                                yOffsetChild += buttonHeight
                             }
                             SettingType.MODE -> {
-                                panel.components.add(ModeButton(
-                                    x,
-                                    y + yOffset,
+                                module.children.add(ModeButton(
+                                    x + width,
+                                    y + yOffset + yOffsetChild - buttonHeight,
                                     width,
-                                    moduleHeightInPanel,
+                                    buttonHeight,
                                     panel,
                                     setting.name,
-                                    module.getSetting(setting.name) as ModeSetting
+                                    module.findSetting(setting.name) as ModeSetting
                                 ))
 
-                                yOffset += moduleHeightInPanel
+                                yOffsetChild += buttonHeight
                             }
-                            else -> Banana.logger.warn("Invalid setting type ${setting.settingType}")
                         }
                     }
                 }
@@ -115,6 +116,11 @@ class ClickGuiScreen: Screen(Text.of("ClickGUI")) {
 
             xOffset += width + 10.0
         }
+    }
+
+    override fun close() {
+        super.close()
+        ModuleManager.getModules().forEach { it.children.clear() }
     }
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
@@ -147,6 +153,13 @@ class ClickGuiScreen: Screen(Text.of("ClickGUI")) {
         panels.forEach { it.mouseDragged(click.x, click.y, click.button()) }
 
         return super.mouseDragged(click, deltaY, offsetY)
+    }
+
+    override fun mouseMoved(mouseX: Double, mouseY: Double) {
+
+        panels.forEach { it.mouseMoved(mouseX, mouseY) }
+
+        return super.mouseMoved(mouseX, mouseY)
     }
 
     override fun shouldPause(): Boolean = false

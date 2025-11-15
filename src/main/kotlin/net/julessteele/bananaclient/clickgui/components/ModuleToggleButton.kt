@@ -1,18 +1,19 @@
 package net.julessteele.bananaclient.clickgui.components
 
-import net.julessteele.bananaclient.Banana
 import net.julessteele.bananaclient.clickgui.Component
 import net.julessteele.bananaclient.clickgui.Panel
 import net.julessteele.bananaclient.modules.module.Module
 import net.minecraft.client.gui.DrawContext
-import net.minecraft.text.Text
 import net.minecraft.util.Colors
 
-class ModuleToggleButton(x: Double, y: Double, width: Double, height: Double, parent: Panel, val module: Module, var expanded: Boolean = false): Component(x, y, width, height, parent) {
+class ModuleToggleButton(x: Double, y: Double, width: Double, height: Double, parent: Panel, val module: Module): Component(x, y, width, height, parent) {
 
-    override fun render(context: DrawContext, mouseX: Int, mouseY: Int, parent: Panel) {
+    // TODO stop expanded from resetting to false when opening the gui
+    var expanded = false
 
-        super.render(context, mouseX, mouseY, parent)
+    override fun render(context: DrawContext, mouseX: Int, mouseY: Int) {
+
+        super.render(context, mouseX, mouseY)
 
         val color = if (module.enabled) Colors.GREEN + 40 else if (hovered) 0xFF777777.toInt() else 0xFFAAAAAA.toInt()
 
@@ -26,14 +27,23 @@ class ModuleToggleButton(x: Double, y: Double, width: Double, height: Double, pa
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int) {
         if (hovered) {
             if (button == 0)
-                toggle(module)
+                module.toggle()
             if (button == 1)
                 expanded = !expanded
         }
+
+        module.children.forEach { it.mouseClicked(mouseX, mouseY, button) }
     }
 
-    fun toggle(module: Module) {
-        module.toggle()
-        Banana.logger.info("CLICKGUI: Toggled ${module.name} to ${module.enabled}")
+    override fun mouseReleased(mouseX: Double, mouseY: Double, button: Int) {
+        module.children.forEach { it.mouseReleased(mouseX, mouseY, button) }
+    }
+
+    override fun mouseDragged(mouseX: Double, mouseY: Double, button: Int) {
+        module.children.forEach { it.mouseDragged(mouseX, mouseY, button) }
+    }
+
+    override fun mouseMoved(mouseX: Double, mouseY: Double) {
+        module.children.forEach { it.mouseMoved(mouseX, mouseY) }
     }
 }
