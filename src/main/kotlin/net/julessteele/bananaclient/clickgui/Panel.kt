@@ -9,9 +9,11 @@ import org.joml.Vector2d
 class Panel(var pos: Vector2d, val width: Double, val height: Double, var category: Category) {
 
     val components = mutableListOf<Component>()
+
     var dragging = false
 
     private val client = MinecraftClient.getInstance()
+
     private var dragOffset = Vector2d(0.0, 0.0)
 
     fun render(context: DrawContext, mouseX: Int, mouseY: Int) {
@@ -35,7 +37,7 @@ class Panel(var pos: Vector2d, val width: Double, val height: Double, var catego
                     return
                 else {
                     // We already know now that it's a ModuleToggleButton and thus can check if visible
-                    if (it.expanded) {
+                    if (it.module.expanded) {
                         // And finally render the child if it can be seen
                         it.module.children.forEach { c -> c.render(context, mouseX, mouseY) }
                     }

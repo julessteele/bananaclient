@@ -51,7 +51,7 @@ class Jesus: Module("Jesus", "Allows the player to walk on water.", Category.MOV
         val blockBelowState = world.getBlockState(pos)
         val blockAboveState = world.getBlockState(pos.up())
 
-        fun isWaterLike(block: net.minecraft.block.Block) = block == Blocks.WATER || block == Blocks.SEAGRASS || block == Blocks.TALL_SEAGRASS
+        fun isWaterLike(block: net.minecraft.block.Block) = block == Blocks.WATER || block == Blocks.SEAGRASS || block == Blocks.TALL_SEAGRASS || block == Blocks.KELP || block == Blocks.KELP_PLANT
 
         // Not above waterlike block -> skip
         if (!isWaterLike(blockBelowState.block) && !isWaterLike(blockAboveState.block)) return

@@ -8,9 +8,6 @@ import net.minecraft.util.Colors
 
 class ModuleToggleButton(x: Double, y: Double, width: Double, height: Double, parent: Panel, val module: Module): Component(x, y, width, height, parent) {
 
-    // TODO stop expanded from resetting to false when opening the gui
-    var expanded = false
-
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int) {
 
         super.render(context, mouseX, mouseY)
@@ -29,7 +26,7 @@ class ModuleToggleButton(x: Double, y: Double, width: Double, height: Double, pa
             if (button == 0)
                 module.toggle()
             if (button == 1)
-                expanded = !expanded
+                module.expanded = !module.expanded
         }
 
         module.children.forEach { it.mouseClicked(mouseX, mouseY, button) }

@@ -16,11 +16,15 @@ abstract class Module(val name: String, val description: String, val category: C
 
     protected val client: MinecraftClient = MinecraftClient.getInstance()
 
+    // State of whether mod is active
     var enabled: Boolean = false
+    // Whether or not the mod is expanded in the clickgui
+    var expanded: Boolean = false
 
     // Settings -> List of Settings used for manipulating changeable values of modules, registered in module init { }
     private val settings = mutableListOf<Setting>()
     // Children -> List of SettingComponents used for rendering buttons of settings on the ClickGUI, added automatically when ClickGUI is initialized
+    // IMPORTANT NOTE: Do not store persistent information in children, they are removed from memory when the clickgui is not in use.
     val children = mutableListOf<SettingComponent>()
 
     val keybind: KeyBinding = KeyBindingHelper.registerKeyBinding(KeyBinding(
