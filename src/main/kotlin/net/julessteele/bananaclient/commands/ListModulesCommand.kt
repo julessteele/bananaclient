@@ -2,8 +2,8 @@ package net.julessteele.bananaclient.commands
 
 import net.julessteele.bananaclient.command.Command
 import net.julessteele.bananaclient.modules.module.ModuleManager
-import net.julessteele.bananaclient.util.CommandChatUtil.sendClientMsg
-import net.julessteele.bananaclient.util.CommandChatUtil.sendUseCaseClientMsg
+import net.julessteele.bananaclient.util.ChatUtil.sendClientMsg
+import net.julessteele.bananaclient.util.ChatUtil.sendUseCaseClientMsg
 
 class ListModulesCommand: Command("listmodules", "Lists all modules available in the client and their descriptions.", ".listmodules") {
 

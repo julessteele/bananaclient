@@ -4,6 +4,7 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import net.julessteele.bananaclient.Banana
+import net.julessteele.bananaclient.util.ChatUtil
 import net.julessteele.bananaclient.util.FileUtil
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.util.math.MatrixStack
@@ -17,7 +18,23 @@ object ModuleManager {
         modules.add(module)
     }
 
-    fun getModule(name: String): Module? = modules.find { it.name.equals(name, ignoreCase = true) }
+    fun getModule(name: String, shouldSendErrMsgInChat: Boolean = false): Module? {
+        val m = modules.find {
+            it.name.equals(name, ignoreCase = true) || it.name.equals(
+                name.replace(" ", "").lowercase(),
+                ignoreCase = true
+            )
+        }
+
+        if (m == null) {
+            val s = "Module $name not found..."
+            Banana.logger.error(s)
+
+            if (shouldSendErrMsgInChat) ChatUtil.sendClientMsg(s)
+        }
+
+        return m
+    }
 
     fun getModules(category: Category? = null): List<Module> {
         return if (category == null) {

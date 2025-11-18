@@ -7,7 +7,7 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.text.Text
 import net.minecraft.util.Colors
 
-class ModuleHudList: Module("ModuleHudList", "Displays a list of all active modules on the screen.", Category.HUD) {
+class HudList: Module("HudList", "Displays a list of all active modules on the screen.", Category.HUD) {
 
     override fun onRenderHUD(context: DrawContext) {
 
@@ -17,6 +17,7 @@ class ModuleHudList: Module("ModuleHudList", "Displays a list of all active modu
         var yOffset = 5
 
         for (module in modules) {
+            // Prevent ClickGUI module from potentially flickering onscreen
             if (module is ClickGui) return
 
             context.drawTextWithShadow(textRenderer, Text.literal(module.name), 5, yOffset, Colors.WHITE)

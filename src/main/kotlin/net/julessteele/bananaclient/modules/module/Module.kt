@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.julessteele.bananaclient.Banana
 import net.julessteele.bananaclient.clickgui.SettingComponent
 import net.julessteele.bananaclient.settings.Setting
+import net.julessteele.bananaclient.util.ChatUtil
 import net.julessteele.bananaclient.util.KeybindUtil
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
@@ -48,7 +49,23 @@ abstract class Module(val name: String, val description: String, val category: C
 
     // Register settings in module init { }
     fun registerSetting(setting: Setting) = settings.add(setting)
-    fun findSetting(name: String): Setting? = settings.find { it.name.equals(name, ignoreCase = true) }
+
+    // Can find settings with or without spaces
+    fun findSetting(name: String, shouldSendErrorMsgInChat: Boolean = false): Setting? {
+        val s = settings.find { it.name.equals(name, ignoreCase = true) || it.name.replace(" ", "").equals(name, ignoreCase = true) }
+
+        if (s == null) {
+            val s1 = "Setting \"$name\" not found in module \"${this.name}\""
+
+            Banana.logger.error(s1)
+
+            if (shouldSendErrorMsgInChat)
+                ChatUtil.sendClientMsg(s1)
+        }
+
+        return s
+    }
+
     fun getSettings() = settings
 
     fun findChild(settingComponent: SettingComponent): SettingComponent? = children.find { it.javaClass.simpleName.equals(settingComponent.javaClass.simpleName, ignoreCase = true) }

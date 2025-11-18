@@ -6,17 +6,18 @@ import net.julessteele.bananaclient.command.CommandManager
 import net.julessteele.bananaclient.commands.HelpCommand
 import net.julessteele.bananaclient.commands.ListModulesCommand
 import net.julessteele.bananaclient.commands.SayCommand
+import net.julessteele.bananaclient.commands.SetModuleSettingCommand
 import net.julessteele.bananaclient.commands.ToggleCommand
 import net.julessteele.bananaclient.modules.module.ModuleManager
 import net.julessteele.bananaclient.modules.hud.ClickGui
-import net.julessteele.bananaclient.modules.hud.ModuleHudList
+import net.julessteele.bananaclient.modules.hud.HudList
 import net.julessteele.bananaclient.modules.movement.AirJump
 import net.julessteele.bananaclient.modules.movement.Blink
 import net.julessteele.bananaclient.modules.movement.Jesus
 import net.julessteele.bananaclient.modules.render.Fullbright
 import net.minecraft.client.MinecraftClient
 
-object BananaClient : ClientModInitializer {
+object BananaClient: ClientModInitializer {
 
     private var modulesActivated = false
 
@@ -27,7 +28,7 @@ object BananaClient : ClientModInitializer {
         // Register modules
         ModuleManager.register(Fullbright())
         ModuleManager.register(Jesus())
-        ModuleManager.register(ModuleHudList())
+        ModuleManager.register(HudList())
         ModuleManager.register(ClickGui())
         ModuleManager.register(AirJump())
         ModuleManager.register(Blink())
@@ -37,6 +38,10 @@ object BananaClient : ClientModInitializer {
         CommandManager.register(ToggleCommand())
         CommandManager.register(SayCommand())
         CommandManager.register(ListModulesCommand())
+        // Register SetModuleSettingCommand for all modules
+        ModuleManager.getModules().forEach {
+            CommandManager.register(SetModuleSettingCommand(it.name.replace(" ", "").lowercase()))
+        }
 
         // Load module enabled states from last session
         ModuleManager.loadModules()

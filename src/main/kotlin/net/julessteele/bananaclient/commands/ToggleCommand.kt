@@ -2,14 +2,14 @@ package net.julessteele.bananaclient.commands
 
 import net.julessteele.bananaclient.command.Command
 import net.julessteele.bananaclient.modules.module.ModuleManager
-import net.julessteele.bananaclient.util.CommandChatUtil
+import net.julessteele.bananaclient.util.ChatUtil
 
 class ToggleCommand: Command("toggle", "Toggles a module.", ".toggle <module>") {
 
     override fun execute(args: List<String>) {
 
         if (args.isEmpty()) {
-            CommandChatUtil.sendUseCaseClientMsg(usage)
+            ChatUtil.sendUseCaseClientMsg(usage)
             return
         }
 
@@ -17,9 +17,9 @@ class ToggleCommand: Command("toggle", "Toggles a module.", ".toggle <module>") 
 
         if (module != null) {
             module.toggle()
-            CommandChatUtil.sendClientMsg("Toggled ${module.name} ${if (module.enabled) "§aON" else "§cOFF"}")
+            ChatUtil.sendClientMsg("Toggled ${module.name} ${if (module.enabled) "§aON" else "§cOFF"}")
         } else {
-            CommandChatUtil.sendClientMsg("Module provided is invalid, please try again.")
+            ChatUtil.sendClientMsg("Module provided is invalid, please try again.")
         }
     }
 }

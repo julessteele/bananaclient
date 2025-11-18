@@ -1,6 +1,6 @@
 package net.julessteele.bananaclient.command
 
-import net.julessteele.bananaclient.util.CommandChatUtil
+import net.julessteele.bananaclient.util.ChatUtil
 
 object CommandManager {
 
@@ -14,7 +14,7 @@ object CommandManager {
 
     fun handleChatMsg(message: String): Boolean {
 
-        if (CommandChatUtil.suppressNext) return false
+        if (ChatUtil.suppressNext) return false
 
         if (!message.startsWith(prefix)) return false
 
@@ -25,7 +25,7 @@ object CommandManager {
         if (command != null) {
             command.execute(args.drop(1))
         } else {
-            CommandChatUtil.sendClientMsg("Unknown command: $commandName")
+            ChatUtil.sendClientMsg("Unknown command: $commandName")
         }
 
         return true

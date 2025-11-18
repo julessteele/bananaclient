@@ -12,8 +12,8 @@ public abstract class ParticleMixin {
 
     @Inject(method = "getBrightness", at = @At("RETURN"), cancellable = true)
     private void onGetBrightness(float tint, CallbackInfoReturnable<Integer> cir) {
-        if (ModuleManager.INSTANCE.getModule("fullbright") == null) return;
-        if (ModuleManager.INSTANCE.getModule("fullbright").getEnabled()) {
+        if (ModuleManager.INSTANCE.getModule("fullbright", false) == null) return;
+        if (ModuleManager.INSTANCE.getModule("fullbright", false).getEnabled()) {
             cir.setReturnValue(0xF000F0); // max lightmap
         }
     }

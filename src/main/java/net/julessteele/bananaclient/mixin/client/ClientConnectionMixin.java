@@ -16,7 +16,7 @@ public abstract class ClientConnectionMixin {
     @Inject(method = "send(Lnet/minecraft/network/packet/Packet;)V", at = @At("HEAD"), cancellable = true)
     private void onSend(Packet<?> packet, CallbackInfo ci) {
         if (packet instanceof PlayerMoveC2SPacket) {
-            Blink blink = (Blink) ModuleManager.INSTANCE.getModule("blink");
+            Blink blink = (Blink) ModuleManager.INSTANCE.getModule("blink", false);
             if (blink != null && blink.getEnabled()) {
                 blink.getPackets().add(packet);
                 // Cancel the packet so it's not sent to the server

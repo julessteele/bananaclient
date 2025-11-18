@@ -1,8 +1,8 @@
 package net.julessteele.bananaclient.commands
 
 import net.julessteele.bananaclient.command.Command
-import net.julessteele.bananaclient.util.CommandChatUtil
-import net.julessteele.bananaclient.util.CommandChatUtil.sendUseCaseClientMsg
+import net.julessteele.bananaclient.util.ChatUtil
+import net.julessteele.bananaclient.util.ChatUtil.sendUseCaseClientMsg
 
 class SayCommand: Command("say", "Says anything in chat.", ".say <message>") {
 
@@ -11,7 +11,7 @@ class SayCommand: Command("say", "Says anything in chat.", ".say <message>") {
         if (args.isEmpty()) {
             sendUseCaseClientMsg(usage)
         } else {
-            CommandChatUtil.sendSafeServerMsg(args.joinToString(" "))
+            ChatUtil.sendSafeServerMsg(args.joinToString(" "))
         }
     }
 }

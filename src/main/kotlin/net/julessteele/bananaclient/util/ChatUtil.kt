@@ -4,7 +4,7 @@ import net.julessteele.bananaclient.Banana
 import net.minecraft.client.MinecraftClient
 import net.minecraft.text.Text
 
-object CommandChatUtil {
+object ChatUtil {
 
     var suppressNext = false
 

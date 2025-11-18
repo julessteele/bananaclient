@@ -2,9 +2,9 @@ package net.julessteele.bananaclient.commands
 
 import net.julessteele.bananaclient.command.Command
 import net.julessteele.bananaclient.command.CommandManager
-import net.julessteele.bananaclient.util.CommandChatUtil
-import net.julessteele.bananaclient.util.CommandChatUtil.sendClientMsg
-import net.julessteele.bananaclient.util.CommandChatUtil.sendUseCaseClientMsg
+import net.julessteele.bananaclient.util.ChatUtil
+import net.julessteele.bananaclient.util.ChatUtil.sendClientMsg
+import net.julessteele.bananaclient.util.ChatUtil.sendUseCaseClientMsg
 
 class HelpCommand: Command("help", "Shows all commands or command usage.", ".help | .help <command>") {
 
@@ -12,7 +12,7 @@ class HelpCommand: Command("help", "Shows all commands or command usage.", ".hel
 
         if (args.isEmpty()) {
             CommandManager.getCommands().forEach {
-                CommandChatUtil.sendClientMsg("§e.${it.name}§7 - ${it.description}")
+                ChatUtil.sendClientMsg("§e.${it.name}§7 - ${it.description}")
             }
         } else {
             val cmdName = args[0]
