@@ -68,11 +68,11 @@ object ModuleManager {
     fun onRenderHUD(context: DrawContext) = modules.filter { it.enabled }.forEach { it.onRenderHUD(context) }
 
     fun loadModules() {
-        if (!FileUtil.banana_module_config_file.exists()) return
+        if (!FileUtil.moduleCfgFile.exists()) return
 
         try {
 
-            val fileContent = FileUtil.banana_module_config_file.readText()
+            val fileContent = FileUtil.moduleCfgFile.readText()
             val jsonObject: JsonObject = JsonParser.parseString(fileContent).asJsonObject
 
             fun coerceBoolean(jsonElement: JsonElement?): Boolean? {
@@ -121,9 +121,9 @@ object ModuleManager {
 
     fun saveModules() {
         try {
-            if (!FileUtil.banana_module_config_file.parentFile.exists()) FileUtil.banana_module_config_file.parentFile.mkdirs()
+            if (!FileUtil.moduleCfgFile.parentFile.exists()) FileUtil.moduleCfgFile.parentFile.mkdirs()
             val json = FileUtil.gson.toJson(modules.associate { it.name to it.enabled })
-            FileOutputStream(FileUtil.banana_module_config_file).use {
+            FileOutputStream(FileUtil.moduleCfgFile).use {
                 it.write(json.toByteArray())
                 it.fd.sync() // Flush to disk immediately
             }

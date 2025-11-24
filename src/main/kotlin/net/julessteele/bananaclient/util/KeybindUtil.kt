@@ -6,5 +6,5 @@ import net.minecraft.util.Identifier
 
 object KeybindUtil {
 
-    val bananaClientKeybindCategory: KeyBinding.Category = KeyBinding.Category.create(Identifier.of(Banana.MOD_ID, "category.${Banana.MOD_ID}"))
+    val bananaClientKeybindCategory: KeyBinding.Category = KeyBinding.Category.create(Identifier.of(Banana.MOD_ID, "modules"))
 }

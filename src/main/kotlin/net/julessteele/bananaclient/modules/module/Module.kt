@@ -57,7 +57,7 @@ abstract class Module(val name: String, val description: String, val category: C
         if (s == null) {
             val s1 = "Setting \"$name\" not found in module \"${this.name}\""
 
-            Banana.logger.error(s1)
+            Banana.logger.warn(s1)
 
             if (shouldSendErrorMsgInChat)
                 ChatUtil.sendClientMsg(s1)

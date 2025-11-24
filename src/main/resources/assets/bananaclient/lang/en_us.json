@@ -1,9 +1,9 @@
 {
-  "key.category.bananaclient.category.bananaclient": "Banana Client",
+  "key.category.bananaclient.modules": "Banana Client",
 
   "key.bananaclient.fullbright": "Fullbright",
   "key.bananaclient.jesus": "Jesus",
-  "key.bananaclient.modulehudlist": "Module HUD List",
+  "key.bananaclient.hudlist": "HUD List",
   "key.bananaclient.clickgui": "Click GUI",
   "key.bananaclient.airjump": "AirJump",
   "key.bananaclient.blink": "Blink"

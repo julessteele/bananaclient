@@ -3,6 +3,7 @@ package net.julessteele.bananaclient
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.julessteele.bananaclient.command.CommandManager
+import net.julessteele.bananaclient.commands.BindCommand
 import net.julessteele.bananaclient.commands.HelpCommand
 import net.julessteele.bananaclient.commands.ListModulesCommand
 import net.julessteele.bananaclient.commands.SayCommand
@@ -38,6 +39,8 @@ object BananaClient: ClientModInitializer {
         CommandManager.register(ToggleCommand())
         CommandManager.register(SayCommand())
         CommandManager.register(ListModulesCommand())
+        CommandManager.register(BindCommand())
+
         // Register SetModuleSettingCommand for all modules
         ModuleManager.getModules().forEach {
             CommandManager.register(SetModuleSettingCommand(it.name.replace(" ", "").lowercase()))

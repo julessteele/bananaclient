@@ -47,11 +47,21 @@ class SetModuleSettingCommand(name: String): Command(name, "Provide a module, se
         if (shouldSetVal) {
 
             val pv = parseValue(v1)
-            if (pv is Boolean || pv is Double || pv is String) setting.value = pv
+            if (pv is Boolean || pv is Double)
+                setting.value = pv
+            else if (pv is String) {
+                if (module.findSetting(pv) != null)
+                    setting.value = pv
+                else {
+                    ChatUtil.sendClientMsg("Unable to find mode \"$pv\"")
+                    return
+                }
+            }
             else {
                 val s2 = "Unable to parse value $v1"
                 ChatUtil.sendClientMsg(s2)
                 Banana.logger.error(s2)
+                return
             }
 
             // Provide feedback

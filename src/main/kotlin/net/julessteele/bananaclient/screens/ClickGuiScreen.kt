@@ -2,6 +2,7 @@ package net.julessteele.bananaclient.screens
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.julessteele.bananaclient.clickgui.ClickGuiConfig
 import net.julessteele.bananaclient.clickgui.Panel
 import net.julessteele.bananaclient.clickgui.components.setting.ModeButton
@@ -17,9 +18,12 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.Click
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
+import net.minecraft.client.input.KeyInput
+import net.minecraft.client.option.KeyBinding
 import net.minecraft.text.Text
 import org.joml.Vector2d
 import kotlin.collections.forEach
+import kotlin.let
 
 @Environment(EnvType.CLIENT)
 class ClickGuiScreen: Screen(Text.of("ClickGUI")) {
@@ -125,7 +129,40 @@ class ClickGuiScreen: Screen(Text.of("ClickGUI")) {
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
 
-        panels.forEach { it.render(context, mouseX, mouseY) }
+        // TODO PREVENT PANELS FROM MOVING OUT OF BOUNDS
+
+        panels.forEach { p ->
+            p.render(context, mouseX, mouseY)
+
+            client?.window?.width?.toDouble()?.let { windowWidth ->
+                if (p.pos.x + p.width > windowWidth) {
+                    p.pos.x = windowWidth - p.width
+                    p.components.forEach { it.x = windowWidth - p.width }
+                }
+                if (p.pos.x < 0.0) {
+                    p.pos.x = 0.0
+                    p.components.forEach { it.x = windowWidth - p.width }
+                }
+            }
+            client?.window?.height?.toDouble()?.let { windowHeight ->
+                if (p.pos.y + p.height > windowHeight) {
+                    p.pos.y = windowHeight - p.height
+                    var yOffset = buttonHeight
+                    p.components.forEach { c ->
+                        c.y = windowHeight - p.height + yOffset
+                        yOffset += buttonHeight
+                    }
+                }
+                if (p.pos.y < 0.0) {
+                    p.pos.y = 0.0
+                    var yOffset = buttonHeight
+                    p.components.forEach { c ->
+                        c.y = yOffset
+                        yOffset += buttonHeight
+                    }
+                }
+            }
+        }
 
         super.render(context, mouseX, mouseY, delta)
     }
@@ -163,6 +200,17 @@ class ClickGuiScreen: Screen(Text.of("ClickGUI")) {
     }
 
     override fun shouldPause(): Boolean = false
+
+    override fun keyPressed(input: KeyInput?): Boolean {
+
+        // If button to open module is pressed close gui
+        if (ModuleManager.getModule("ClickGUI")?.keybind?.matchesKey(input) ?: false) {
+            this.close()
+            return true
+        }
+
+        return super.keyPressed(input)
+    }
 }
 
 fun openClickGuiScreen() = MinecraftClient.getInstance().setScreen(ClickGuiScreen())
