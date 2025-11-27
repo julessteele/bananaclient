@@ -1,7 +1,7 @@
-package net.julessteele.bananaclient.modules.render
+package net.julessteele.bananaclient.module.modules.render
 
-import net.julessteele.bananaclient.modules.module.Category
-import net.julessteele.bananaclient.modules.module.Module
+import net.julessteele.bananaclient.module.Category
+import net.julessteele.bananaclient.module.Module
 import net.minecraft.client.texture.NativeImage
 import net.minecraft.client.texture.NativeImageBackedTexture
 import net.minecraft.util.Colors

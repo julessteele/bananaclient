@@ -1,7 +1,7 @@
-package net.julessteele.bananaclient.commands
+package net.julessteele.bananaclient.command.commands
 
 import net.julessteele.bananaclient.command.Command
-import net.julessteele.bananaclient.modules.module.ModuleManager
+import net.julessteele.bananaclient.module.ModuleManager
 import net.julessteele.bananaclient.util.ChatUtil
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
@@ -23,7 +23,7 @@ class BindCommand: Command("bind", "Allows the user to bind a key to a module wi
         val module = ModuleManager.getModule(moduleName, shouldSendErrMsgInChat = true) ?: return
 
         // Get keybind and reassign
-        getKeyInput(keyBindName)?.let {
+        getKeyAsInt(keyBindName)?.let {
             // Change keybind
             module.keybind.setBoundKey(InputUtil.Type.KEYSYM.createFromCode(it))
             // Rebuild binding map
@@ -38,7 +38,7 @@ class BindCommand: Command("bind", "Allows the user to bind a key to a module wi
         ChatUtil.sendClientMsg("No valid key found for keybind \"$keyBindName\"")
     }
 
-    private fun getKeyInput(k: String): Int? {
+    private fun getKeyAsInt(k: String): Int? {
         when (k.uppercase()) {
             "0" -> return InputUtil.GLFW_KEY_0
             "1" -> return InputUtil.GLFW_KEY_1

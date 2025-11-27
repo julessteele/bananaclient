@@ -8,9 +8,7 @@ object CommandManager {
 
     var prefix = "."
 
-    fun register(command: Command) {
-        commands.add(command)
-    }
+    fun register(command: Command) = commands.add(command)
 
     fun handleChatMsg(message: String): Boolean {
 

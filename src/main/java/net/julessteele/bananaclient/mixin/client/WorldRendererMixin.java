@@ -1,6 +1,6 @@
 package net.julessteele.bananaclient.mixin.client;
 
-import net.julessteele.bananaclient.modules.module.ModuleManager;
+import net.julessteele.bananaclient.module.ModuleManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.util.math.BlockPos;

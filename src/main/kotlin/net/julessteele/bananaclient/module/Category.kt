@@ -1,4 +1,4 @@
-package net.julessteele.bananaclient.modules.module
+package net.julessteele.bananaclient.module
 
 enum class Category(val friendlyName: String) {
 

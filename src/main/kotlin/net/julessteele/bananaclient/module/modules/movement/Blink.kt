@@ -1,7 +1,7 @@
-package net.julessteele.bananaclient.modules.movement
+package net.julessteele.bananaclient.module.modules.movement
 
-import net.julessteele.bananaclient.modules.module.Category
-import net.julessteele.bananaclient.modules.module.Module
+import net.julessteele.bananaclient.module.Category
+import net.julessteele.bananaclient.module.Module
 import net.minecraft.network.packet.Packet
 
 class Blink: Module("Blink", "Lets the player disconnect from the server to fake lag to a different position.", Category.MOVEMENT) {

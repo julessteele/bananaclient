@@ -1,4 +1,4 @@
-package net.julessteele.bananaclient.modules.module
+package net.julessteele.bananaclient.module
 
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject

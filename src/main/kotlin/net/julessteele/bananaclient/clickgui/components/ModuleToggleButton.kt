@@ -2,7 +2,7 @@ package net.julessteele.bananaclient.clickgui.components
 
 import net.julessteele.bananaclient.clickgui.Component
 import net.julessteele.bananaclient.clickgui.Panel
-import net.julessteele.bananaclient.modules.module.Module
+import net.julessteele.bananaclient.module.Module
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.util.Colors
 

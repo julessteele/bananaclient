@@ -3,19 +3,20 @@ package net.julessteele.bananaclient
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.julessteele.bananaclient.command.CommandManager
-import net.julessteele.bananaclient.commands.BindCommand
-import net.julessteele.bananaclient.commands.HelpCommand
-import net.julessteele.bananaclient.commands.ListModulesCommand
-import net.julessteele.bananaclient.commands.SayCommand
-import net.julessteele.bananaclient.commands.SetModuleSettingCommand
-import net.julessteele.bananaclient.commands.ToggleCommand
-import net.julessteele.bananaclient.modules.module.ModuleManager
-import net.julessteele.bananaclient.modules.hud.ClickGui
-import net.julessteele.bananaclient.modules.hud.HudList
-import net.julessteele.bananaclient.modules.movement.AirJump
-import net.julessteele.bananaclient.modules.movement.Blink
-import net.julessteele.bananaclient.modules.movement.Jesus
-import net.julessteele.bananaclient.modules.render.Fullbright
+import net.julessteele.bananaclient.command.commands.BindCommand
+import net.julessteele.bananaclient.command.commands.HelpCommand
+import net.julessteele.bananaclient.command.commands.ListModulesCommand
+import net.julessteele.bananaclient.command.commands.ResetClickGuiCommand
+import net.julessteele.bananaclient.command.commands.SayCommand
+import net.julessteele.bananaclient.command.commands.SetModuleSettingCommand
+import net.julessteele.bananaclient.command.commands.ToggleCommand
+import net.julessteele.bananaclient.module.ModuleManager
+import net.julessteele.bananaclient.module.modules.hud.ClickGui
+import net.julessteele.bananaclient.module.modules.hud.HudList
+import net.julessteele.bananaclient.module.modules.movement.AirJump
+import net.julessteele.bananaclient.module.modules.movement.Blink
+import net.julessteele.bananaclient.module.modules.movement.Jesus
+import net.julessteele.bananaclient.module.modules.render.Fullbright
 import net.minecraft.client.MinecraftClient
 
 object BananaClient: ClientModInitializer {
@@ -40,6 +41,7 @@ object BananaClient: ClientModInitializer {
         CommandManager.register(SayCommand())
         CommandManager.register(ListModulesCommand())
         CommandManager.register(BindCommand())
+        CommandManager.register(ResetClickGuiCommand())
 
         // Register SetModuleSettingCommand for all modules
         ModuleManager.getModules().forEach {

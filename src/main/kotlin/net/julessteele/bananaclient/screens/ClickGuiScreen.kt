@@ -2,15 +2,14 @@ package net.julessteele.bananaclient.screens
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.julessteele.bananaclient.clickgui.ClickGuiConfig
 import net.julessteele.bananaclient.clickgui.Panel
 import net.julessteele.bananaclient.clickgui.components.setting.ModeButton
 import net.julessteele.bananaclient.clickgui.components.ModuleToggleButton
 import net.julessteele.bananaclient.clickgui.components.setting.SettingToggleButton
 import net.julessteele.bananaclient.clickgui.components.setting.Slider
-import net.julessteele.bananaclient.modules.module.Category
-import net.julessteele.bananaclient.modules.module.ModuleManager
+import net.julessteele.bananaclient.module.Category
+import net.julessteele.bananaclient.module.ModuleManager
 import net.julessteele.bananaclient.settings.SettingType
 import net.julessteele.bananaclient.settings.setting.ModeSetting
 import net.julessteele.bananaclient.settings.setting.NumberSetting
@@ -19,11 +18,9 @@ import net.minecraft.client.gui.Click
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.input.KeyInput
-import net.minecraft.client.option.KeyBinding
 import net.minecraft.text.Text
 import org.joml.Vector2d
 import kotlin.collections.forEach
-import kotlin.let
 
 @Environment(EnvType.CLIENT)
 class ClickGuiScreen: Screen(Text.of("ClickGUI")) {
@@ -47,7 +44,7 @@ class ClickGuiScreen: Screen(Text.of("ClickGUI")) {
         // Iterate through categories and draw them on screen
         Category.entries.forEach { category ->
 
-            val savedPos = ClickGuiConfig.getPosition(category.name)
+            val savedPos = ClickGuiConfig.getPosition(category)
             val x = savedPos?.first ?: xOffset
             val y = savedPos?.second ?: 10.0
 
@@ -129,40 +126,7 @@ class ClickGuiScreen: Screen(Text.of("ClickGUI")) {
 
     override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
 
-        // TODO PREVENT PANELS FROM MOVING OUT OF BOUNDS
-
-        panels.forEach { p ->
-            p.render(context, mouseX, mouseY)
-
-            client?.window?.width?.toDouble()?.let { windowWidth ->
-                if (p.pos.x + p.width > windowWidth) {
-                    p.pos.x = windowWidth - p.width
-                    p.components.forEach { it.x = windowWidth - p.width }
-                }
-                if (p.pos.x < 0.0) {
-                    p.pos.x = 0.0
-                    p.components.forEach { it.x = windowWidth - p.width }
-                }
-            }
-            client?.window?.height?.toDouble()?.let { windowHeight ->
-                if (p.pos.y + p.height > windowHeight) {
-                    p.pos.y = windowHeight - p.height
-                    var yOffset = buttonHeight
-                    p.components.forEach { c ->
-                        c.y = windowHeight - p.height + yOffset
-                        yOffset += buttonHeight
-                    }
-                }
-                if (p.pos.y < 0.0) {
-                    p.pos.y = 0.0
-                    var yOffset = buttonHeight
-                    p.components.forEach { c ->
-                        c.y = yOffset
-                        yOffset += buttonHeight
-                    }
-                }
-            }
-        }
+        panels.forEach { it.render(context, mouseX, mouseY) }
 
         super.render(context, mouseX, mouseY, delta)
     }
@@ -179,7 +143,7 @@ class ClickGuiScreen: Screen(Text.of("ClickGUI")) {
         panels.forEach {
             it.mouseReleased(click.x, click.y, click.button())
             // Save positions of each panel after each time the mouse is released
-            ClickGuiConfig.setPosition(it.category.name, it.pos.x, it.pos.y)
+            ClickGuiConfig.setPosition(it.category, it.pos.x, it.pos.y)
         }
 
         return super.mouseReleased(click)

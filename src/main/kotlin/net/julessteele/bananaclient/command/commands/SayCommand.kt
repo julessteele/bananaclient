@@ -1,4 +1,4 @@
-package net.julessteele.bananaclient.commands
+package net.julessteele.bananaclient.command.commands
 
 import net.julessteele.bananaclient.command.Command
 import net.julessteele.bananaclient.util.ChatUtil

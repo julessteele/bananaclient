@@ -1,6 +1,6 @@
 package net.julessteele.bananaclient.mixin.client;
 
-import net.julessteele.bananaclient.modules.module.ModuleManager;
+import net.julessteele.bananaclient.module.ModuleManager;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.state.EntityRenderState;

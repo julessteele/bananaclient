@@ -1,15 +1,16 @@
 package net.julessteele.bananaclient.clickgui
 
 import com.google.gson.reflect.TypeToken
+import net.julessteele.bananaclient.module.Category
 import net.julessteele.bananaclient.util.FileUtil
 
 object ClickGuiConfig {
 
-    private var panelPositions: MutableMap<String, Pair<Double, Double>> = mutableMapOf()
+    private var panelPositions: MutableMap<Category, Pair<Double, Double>> = mutableMapOf()
 
     fun load() {
         if (!FileUtil.clickGuiCfgFile.exists()) return
-        val type = object: TypeToken<Map<String, Pair<Double, Double>>>() {}.type
+        val type = object: TypeToken<Map<Category, Pair<Double, Double>>>() {}.type
         panelPositions = FileUtil.gson.fromJson(FileUtil.clickGuiCfgFile.readText(), type) ?: mutableMapOf()
     }
 
@@ -18,12 +19,12 @@ object ClickGuiConfig {
         FileUtil.clickGuiCfgFile.writeText(FileUtil.gson.toJson(panelPositions))
     }
 
-    fun getPosition(categoryName: String): Pair<Double, Double>? {
-        return panelPositions[categoryName]
+    fun getPosition(category: Category): Pair<Double, Double>? {
+        return panelPositions[category]
     }
 
-    fun setPosition(categoryName: String, x: Double, y: Double) {
-        panelPositions[categoryName] = Pair(x, y)
+    fun setPosition(category: Category, x: Double, y: Double) {
+        panelPositions[category] = Pair(x, y)
         save()
     }
 }

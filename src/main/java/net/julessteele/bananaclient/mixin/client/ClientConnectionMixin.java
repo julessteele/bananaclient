@@ -1,7 +1,7 @@
 package net.julessteele.bananaclient.mixin.client;
 
-import net.julessteele.bananaclient.modules.module.ModuleManager;
-import net.julessteele.bananaclient.modules.movement.Blink;
+import net.julessteele.bananaclient.module.ModuleManager;
+import net.julessteele.bananaclient.module.modules.movement.Blink;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;

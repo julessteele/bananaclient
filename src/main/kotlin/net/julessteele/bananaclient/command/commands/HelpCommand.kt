@@ -1,4 +1,4 @@
-package net.julessteele.bananaclient.commands
+package net.julessteele.bananaclient.command.commands
 
 import net.julessteele.bananaclient.command.Command
 import net.julessteele.bananaclient.command.CommandManager
@@ -12,7 +12,7 @@ class HelpCommand: Command("help", "Shows all commands or command usage.", ".hel
 
         if (args.isEmpty()) {
             CommandManager.getCommands().forEach {
-                ChatUtil.sendClientMsg("§e.${it.name}§7 - ${it.description}")
+                sendClientMsg("§e.${it.name}§7 - ${it.description}")
             }
         } else {
             val cmdName = args[0]

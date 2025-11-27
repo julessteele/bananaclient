@@ -1,8 +1,8 @@
 package net.julessteele.bananaclient.mixin.client;
 
 import com.mojang.blaze3d.textures.GpuTextureView;
-import net.julessteele.bananaclient.modules.module.ModuleManager;
-import net.julessteele.bananaclient.modules.render.Fullbright;
+import net.julessteele.bananaclient.module.ModuleManager;
+import net.julessteele.bananaclient.module.modules.render.Fullbright;
 import net.minecraft.client.render.LightmapTextureManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

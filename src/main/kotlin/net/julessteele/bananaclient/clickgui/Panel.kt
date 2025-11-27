@@ -1,7 +1,8 @@
 package net.julessteele.bananaclient.clickgui
 
 import net.julessteele.bananaclient.clickgui.components.ModuleToggleButton
-import net.julessteele.bananaclient.modules.module.Category
+import net.julessteele.bananaclient.module.Category
+import net.julessteele.bananaclient.screens.ClickGuiScreen
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import org.joml.Vector2d
@@ -17,6 +18,46 @@ class Panel(var pos: Vector2d, val width: Double, val height: Double, var catego
     private var dragOffset = Vector2d(0.0, 0.0)
 
     fun render(context: DrawContext, mouseX: Int, mouseY: Int) {
+
+        // Left bound
+        if (pos.x < 0.0) {
+            pos.x = 0.0
+            components.forEach {
+                it.x = pos.x
+                if (it is ModuleToggleButton && it.module.children.isNotEmpty())
+                    it.module.children.forEach { c -> c.x = it.x + it.width }
+            }
+        }
+
+        // TODO FIX THIS BASED ON WHETHER OR NOT THE SETTINGS EXPANDER IS SHOWING ON MODULE
+        // Right bound
+        if (pos.x + width > context.scaledWindowWidth) {
+            pos.x = context.scaledWindowWidth.toDouble() - width
+            components.forEach {
+                it.x = pos.x
+                if (it is ModuleToggleButton && it.module.children.isNotEmpty())
+                    it.module.children.forEach { c -> c.x = it.x + it.width }
+            }
+        }
+
+        // Top bound
+        if (pos.y < 0.0) {
+            pos.y = 0.0
+            components.forEachIndexed { i, comp ->
+                comp.y = pos.y + ClickGuiScreen().buttonHeight * (i + 1)
+                if (comp is ModuleToggleButton && comp.module.children.isNotEmpty())
+                    comp.module.children.forEachIndexed { i1, child -> child.y = comp.y + ClickGuiScreen().buttonHeight * i1 }
+            }
+        }
+        // Bottom bound
+        if (pos.y + height > context.scaledWindowHeight) {
+            pos.y = context.scaledWindowHeight.toDouble() - height
+            components.forEachIndexed { i, comp ->
+                comp.y = pos.y + ClickGuiScreen().buttonHeight * (i + 1)
+                if (comp is ModuleToggleButton && comp.module.children.isNotEmpty())
+                    comp.module.children.forEachIndexed { i1, child -> child.y = comp.y + ClickGuiScreen().buttonHeight * i1 }
+            }
+        }
 
         // Panel background
         context.fill(pos.x.toInt(), pos.y.toInt(), (pos.x + width).toInt(), (pos.y + height).toInt(), 0x99000000.toInt())

@@ -1,9 +1,10 @@
-package net.julessteele.bananaclient.modules.movement
+package net.julessteele.bananaclient.module.modules.movement
 
-import net.julessteele.bananaclient.modules.module.Category
-import net.julessteele.bananaclient.modules.module.Module
+import net.julessteele.bananaclient.module.Category
+import net.julessteele.bananaclient.module.Module
 import net.julessteele.bananaclient.settings.setting.BooleanSetting
 import net.julessteele.bananaclient.settings.setting.NumberSetting
+import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.util.math.BlockPos
 
@@ -51,7 +52,7 @@ class Jesus: Module("Jesus", "Allows the player to walk on water.", Category.MOV
         val blockBelowState = world.getBlockState(pos)
         val blockAboveState = world.getBlockState(pos.up())
 
-        fun isWaterLike(block: net.minecraft.block.Block) = block == Blocks.WATER || block == Blocks.SEAGRASS || block == Blocks.TALL_SEAGRASS || block == Blocks.KELP || block == Blocks.KELP_PLANT
+        fun isWaterLike(block: Block) = block == Blocks.WATER || block == Blocks.SEAGRASS || block == Blocks.TALL_SEAGRASS || block == Blocks.KELP || block == Blocks.KELP_PLANT
 
         // Not above waterlike block -> skip
         if (!isWaterLike(blockBelowState.block) && !isWaterLike(blockAboveState.block)) return

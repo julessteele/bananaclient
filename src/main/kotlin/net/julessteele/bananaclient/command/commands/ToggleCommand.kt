@@ -1,7 +1,7 @@
-package net.julessteele.bananaclient.commands
+package net.julessteele.bananaclient.command.commands
 
 import net.julessteele.bananaclient.command.Command
-import net.julessteele.bananaclient.modules.module.ModuleManager
+import net.julessteele.bananaclient.module.ModuleManager
 import net.julessteele.bananaclient.util.ChatUtil
 
 class ToggleCommand: Command("toggle", "Toggles a module.", ".toggle <module>") {
