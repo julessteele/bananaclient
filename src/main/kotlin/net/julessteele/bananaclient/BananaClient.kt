@@ -25,6 +25,15 @@ object BananaClient: ClientModInitializer {
 
     override fun onInitializeClient() {
 
+        // Define util function
+        fun checkForFirstEnable(client: MinecraftClient) {
+            if (client.world != null && !modulesActivated) {
+                modulesActivated = true
+                ModuleManager.getModules().forEach { if (it.enabled) it.onEnable() }
+                Banana.logger.info("fun checkForFirstEnable -> Activated saved modules after world load.")
+            }
+        }
+
         Banana.logger.info("Hello from the ${Banana.NAME} Client Mod Initializer!")
 
         // Register modules
@@ -63,13 +72,5 @@ object BananaClient: ClientModInitializer {
 
         // Print that initializing is finished
         Banana.logger.info("${Banana.NAME} has finished registering modules/commands and has attached hooks... Client INIT Finished!")
-    }
-
-    private fun checkForFirstEnable(client: MinecraftClient) {
-        if (client.world != null && !modulesActivated) {
-            modulesActivated = true
-            ModuleManager.getModules().forEach { if (it.enabled) it.onEnable() }
-            Banana.logger.info("fun checkForFirstEnable -> Activated saved modules after world load.")
-        }
     }
 }
