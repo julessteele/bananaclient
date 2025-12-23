@@ -15,6 +15,7 @@ import net.julessteele.bananaclient.module.modules.hud.ClickGui
 import net.julessteele.bananaclient.module.modules.hud.HudList
 import net.julessteele.bananaclient.module.modules.movement.AirJump
 import net.julessteele.bananaclient.module.modules.movement.Blink
+import net.julessteele.bananaclient.module.modules.movement.Fly
 import net.julessteele.bananaclient.module.modules.movement.Jesus
 import net.julessteele.bananaclient.module.modules.render.Fullbright
 import net.minecraft.client.MinecraftClient
@@ -43,6 +44,7 @@ object BananaClient: ClientModInitializer {
         ModuleManager.register(ClickGui())
         ModuleManager.register(AirJump())
         ModuleManager.register(Blink())
+        ModuleManager.register(Fly())
 
         // Register commands
         CommandManager.register(HelpCommand())
@@ -51,11 +53,8 @@ object BananaClient: ClientModInitializer {
         CommandManager.register(ListModulesCommand())
         CommandManager.register(BindCommand())
         CommandManager.register(ResetClickGuiCommand())
-
         // Register SetModuleSettingCommand for all modules
-        ModuleManager.getModules().forEach {
-            CommandManager.register(SetModuleSettingCommand(it.name.replace(" ", "").lowercase()))
-        }
+        ModuleManager.getModules().forEach { CommandManager.register(SetModuleSettingCommand(it.name.replace(" ", "").lowercase())) }
 
         // Load module enabled states from last session
         ModuleManager.loadModules()

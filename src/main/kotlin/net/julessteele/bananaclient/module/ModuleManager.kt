@@ -38,9 +38,9 @@ object ModuleManager {
 
     fun getModules(category: Category? = null): List<Module> {
         return if (category == null) {
-            this.modules
+            modules
         } else {
-            this.modules.filter { it.category == category }
+            modules.filter { it.category == category }
         }
     }
 

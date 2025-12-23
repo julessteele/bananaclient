@@ -19,7 +19,7 @@ abstract class Module(val name: String, val description: String, val category: C
 
     // State of whether mod is active
     var enabled: Boolean = false
-    // Whether or not the mod is expanded in the clickgui
+    // Whether the mod is expanded in the clickgui
     var expanded: Boolean = false
 
     // Settings -> List of Settings used for manipulating changeable values of modules, registered in module init { }

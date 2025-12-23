@@ -12,8 +12,10 @@ class HelpCommand: Command("help", "Shows all commands or command usage.", ".hel
 
         if (args.isEmpty()) {
             CommandManager.getCommands().forEach {
-                sendClientMsg("§e.${it.name}§7 - ${it.description}")
+                if (it !is SetModuleSettingCommand)
+                    sendClientMsg("§e.${it.name}§7 — ${it.description}")
             }
+            sendClientMsg("§e.<modulename>§7 — ${SetModuleSettingCommand("").description}")
         } else {
             val cmdName = args[0]
             val cmd: Command? = if (CommandManager.getCommands(cmdName).isEmpty()) { null } else { CommandManager.getCommands(cmdName).first() }
